@@ -1,5 +1,11 @@
-import { Container, HeadTitle, TopBar, Filters } from "../components/shared/index";
-
+import {
+  Container,
+  HeadTitle,
+  TopBar,
+  Filters,
+  ProductsGroupList,
+} from "../components/shared/index";
+import { products } from "../data/data";
 export default function Home() {
   return (
     <>
@@ -9,7 +15,7 @@ export default function Home() {
       <TopBar />
 
       <Container className="mt-10 pb-14">
-        <div className="flex gap-[60px]">
+        <div className="flex gap-[80px]">
           {/* Filtration */}
           <div className="w-[250px]">
             <Filters />
@@ -17,9 +23,8 @@ export default function Home() {
           {/* the list of goods */}
           <div className="flex-1">
             <div className="flex flex-col gap-16">
-              the list of goods
-              {/* <ProductsGroupList title="Пиццы" items={[1, 2, 3, 4, 5]} />
-              <ProductsGroupList title="Комбо" items={[1, 2, 3, 4, 5]} /> */}
+              <ProductsGroupList title="Pizzas" products={products} categoryId={1} />
+              <ProductsGroupList title="Kombo" products={products} categoryId={2} />
             </div>
             {/* 
             <div className="flex items-center gap-6 mt-12">
