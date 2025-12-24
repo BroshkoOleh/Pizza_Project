@@ -3,6 +3,7 @@ import { Container } from "../shared/Container";
 import Image from "next/image";
 import { Button } from "../ui/index";
 import { ShoppingCart, User, ArrowRight } from "lucide-react";
+import { SearchInput } from "./index";
 interface Props {
   className?: string;
 }
@@ -20,6 +21,11 @@ function Header({ className }: Props) {
             <p className="text-sm text-gray-400 leading-3">Can&apos;t be teaster</p>
           </div>
         </div>
+
+        <div className="mx-10 flex-1">
+          <SearchInput />
+        </div>
+
         {/* Right Side */}
 
         <div className="flex items-center gap-1">
