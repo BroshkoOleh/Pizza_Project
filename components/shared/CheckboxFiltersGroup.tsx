@@ -17,7 +17,7 @@ interface Props {
   searchInputPlaceholder?: string;
   onClickCheckbox?: (id: string) => void;
   defaultValue?: string[];
-  selected?: Set<string>;
+  selectedIds?: Set<string>;
   className?: string;
   name?: string;
 }
@@ -27,11 +27,11 @@ export const CheckboxFiltersGroup = ({
   items,
   defaultItems,
   limit = 5,
-  searchInputPlaceholder = "Поиск...",
+  searchInputPlaceholder = "Search...",
   className,
   loading,
   onClickCheckbox,
-  selected,
+  selectedIds,
   name,
 }: Props) => {
   const [showAll, setShowAll] = useState(false);
@@ -80,9 +80,9 @@ export const CheckboxFiltersGroup = ({
             text={item.text}
             value={item.value}
             endAdornment={item.endAdornment}
-            // checked={selected?.has(item.value)}
-            // onCheckedChange={() => onClickCheckbox?.(item.value)}
-            // name={name}
+            checked={selectedIds?.has(item.value)}
+            onCheckedChange={() => onClickCheckbox?.(item.value)}
+            name={name}
           />
         ))}
       </div>
