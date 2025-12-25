@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { HeadTitle, FilterCheckbox, RangeSlider, CheckboxFiltersGroup } from "../shared/index";
 import { useFilterIngredients } from "@/app/hooks/useFilterIngredients";
+import { useSet } from "react-use";
 
 interface Props {
   className?: string;
@@ -15,22 +16,50 @@ interface PriceProps {
 }
 
 export function Filters({ className }: Props) {
-  const { ingredients, loading, onAddId, selectedIds } = useFilterIngredients();
+  const { ingredients, loading, onAddId, selectedIngredients } = useFilterIngredients();
+  const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]));
+  const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(new Set<string>([]));
+
   const [prices, setPrices] = useState<PriceProps>({ priceFrom: 0, priceTo: 1000 });
 
   const updatePrices = (name: keyof PriceProps, value: number) => {
     setPrices({ ...prices, [name]: value });
   };
 
+  useEffect(() => {
+    console.log({ prices, pizzaTypes, sizes, selectedIngredients });
+  }, [prices, pizzaTypes, sizes, selectedIngredients]);
+
   const items = ingredients.map((item) => ({ text: item.name, value: item.id }));
   return (
     <div className={className}>
       <HeadTitle text="Filter" size="sm" className="mb-5 font-bold" />
       {/* top CheckBoxs */}
-      <div className="flex flex-col gap-4">
-        <FilterCheckbox name="can_be_collected" text="can be collected" value="1" />
-        <FilterCheckbox name="novelty" text="novelty" value="2" />
-      </div>
+
+      <CheckboxFiltersGroup
+        title="type of dough"
+        name="pizzaTypes"
+        className="mb-5"
+        onClickCheckbox={togglePizzaTypes}
+        selected={pizzaTypes}
+        items={[
+          { text: "thin", value: "1" },
+          { text: "traditional", value: "2" },
+        ]}
+      />
+
+      <CheckboxFiltersGroup
+        title="sizes"
+        name="sizes"
+        className="mb-5"
+        onClickCheckbox={toggleSizes}
+        selected={sizes}
+        items={[
+          { text: "20 cm", value: "20" },
+          { text: "30 cm", value: "30" },
+          { text: "40 cm", value: "40" },
+        ]}
+      />
       {/* price filter */}
       <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
         <p className="font-bold mb-3"> Price from and to</p>
@@ -70,7 +99,7 @@ export function Filters({ className }: Props) {
         items={items}
         loading={loading}
         onClickCheckbox={onAddId}
-        selectedIds={selectedIds}
+        selected={selectedIngredients}
         name="ingredients"
       />
     </div>
