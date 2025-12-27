@@ -88,8 +88,7 @@ async function up() {
   const pizza1 = await prisma.product.create({
     data: {
       name: "Paperoni Fresh",
-      imageUrl:
-        "https://media.dodostatic.net/image/r:233x233/11EE7D61304FAF5A98A6958F2BB2D260.webp",
+      imageUrl: "/pizzas/paperoni.webp",
       categoryId: categoriesPizzaId,
       ingredients: {
         connect: allIngridients.slice(0, 5),
@@ -99,8 +98,7 @@ async function up() {
   const pizza2 = await prisma.product.create({
     data: {
       name: "4 cheeses",
-      imageUrl:
-        "https://media.dodostatic.net/image/r:233x233/11EE7D61304FAF5A98A6958F2BB2D260.webp",
+      imageUrl: "/pizzas/4-cheese.webp",
       categoryId: categoriesPizzaId,
       ingredients: {
         connect: allIngridients.slice(5, 10),
@@ -109,9 +107,8 @@ async function up() {
   });
   const pizza3 = await prisma.product.create({
     data: {
-      name: "Carbonara",
-      imageUrl:
-        "https://media.dodostatic.net/image/r:233x233/11EE7D61304FAF5A98A6958F2BB2D260.webp",
+      name: "Chorizo",
+      imageUrl: "/pizzas/chorizo.webp",
       categoryId: categoriesPizzaId,
       ingredients: {
         connect: allIngridients.slice(10, 25),
@@ -133,7 +130,7 @@ async function up() {
       generateProductItem({ productId: pizza2.id, pizzaType: 2, size: 20 }),
       generateProductItem({ productId: pizza2.id, pizzaType: 2, size: 30 }),
       generateProductItem({ productId: pizza2.id, pizzaType: 2, size: 40 }),
-      // Carbonara
+      // Chorizo
       generateProductItem({ productId: pizza3.id, pizzaType: 1, size: 30 }),
       generateProductItem({ productId: pizza3.id, pizzaType: 2, size: 30 }),
       generateProductItem({ productId: pizza3.id, pizzaType: 2, size: 40 }),
