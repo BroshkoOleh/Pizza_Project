@@ -5,9 +5,8 @@ import {
   TopBar,
   Filters,
   ProductsGroupList,
-} from "../components/shared/index";
+} from "@/components/shared/index";
 
-import { products } from "../data/data";
 export default async function Home() {
   const categories = await prisma.category.findMany({
     include: {
@@ -30,7 +29,7 @@ export default async function Home() {
       <TopBar categories={categories} />
 
       <Container className="mt-10 pb-14">
-        <div className="flex gap-[80px]">
+        <div className="flex gap-20">
           {/* Filtration */}
           <div className="w-[250px]">
             <Filters />

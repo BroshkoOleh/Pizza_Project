@@ -19,8 +19,10 @@ export const ProductCard = ({ id, name, price, imageUrl, ingredients, className 
   return (
     <div className={cn("flex flex-col h-full", className)}>
       <Link href={`/product/${id}`} className="flex flex-col h-full">
-        <div className="flex justify-center p-6 bg-secondary rounded-lg h-[260px] shrink-0">
-          <Image width={215} height={215} src={imageUrl} alt={name} />
+        <div className="flex justify-center items-center p-6 bg-secondary rounded-lg h-[260px] shrink-0">
+          <div className="relative w-[215px] h-[215px]">
+            <Image fill src={imageUrl} alt={name} className="object-contain" sizes="215px" />
+          </div>
         </div>
 
         <HeadTitle text={name} size="sm" className="mb-1 mt-3 font-bold shrink-0" />
