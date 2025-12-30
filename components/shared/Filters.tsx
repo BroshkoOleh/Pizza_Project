@@ -2,7 +2,7 @@
 
 import { Input } from "../ui/input";
 import { HeadTitle, RangeSlider, CheckboxFiltersGroup } from "../shared/index";
-import { useFilters, useQueryFilters, useIngredients } from "@/app/hooks";
+import { useFilters, useQueryFilters, useIngredients } from "@/hooks";
 
 interface Props {
   className?: string;
