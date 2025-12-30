@@ -1,7 +1,7 @@
-import prisma from "@/lib/db";
+import prisma from "@/shared/lib/db";
 import { hashSync } from "bcrypt";
 import { categories, ingredients, products } from "./constants";
-import { Prisma } from "@/lib/generated/prisma/client";
+import { Prisma } from "@/shared/lib/generated/prisma/client";
 
 const randomDecimalNumber = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min) * 10 + min * 10) / 10;

@@ -1,6 +1,6 @@
-import prisma from "@/lib/db";
+import prisma from "@/shared/lib/db";
 import { notFound } from "next/navigation";
-import { Container, PizzaImage, HeadTitle, GroupVariants } from "@/components/shared";
+import { Container, PizzaImage, HeadTitle, GroupVariants } from "@/shared/components/shared";
 
 interface Props {
   params: Promise<{ id: string }>;
