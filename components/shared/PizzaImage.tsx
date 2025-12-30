@@ -7,7 +7,7 @@ interface Props {
   size: 20 | 30 | 40;
 }
 
-export function ProductImage({ imageUrl, size, className }: Props) {
+export function PizzaImage({ imageUrl, size, className }: Props) {
   const sizeMap = {
     20: 300,
     30: 400,
