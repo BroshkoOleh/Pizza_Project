@@ -30,7 +30,7 @@ export function ChooseProductModal({ product, className }: Props) {
             imageUrl={product.imageUrl}
             name={product.name}
             ingredients={product.ingredients}
-            variation={product.variation}
+            variations={product.variation}
           />
         ) : (
           <ChooseProductForm imageUrl={product.imageUrl} name={product.name} />
