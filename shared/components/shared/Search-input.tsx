@@ -2,7 +2,7 @@
 
 import { cn } from "@/shared/lib/utils";
 import { Api } from "../../services/api-client";
-import { Product } from "@/shared/lib/generated/prisma/client";
+import { Product } from "../../lib/prisma/generatedPrisma/client";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";

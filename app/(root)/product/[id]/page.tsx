@@ -1,4 +1,4 @@
-import prisma from "@/shared/lib/db";
+import prisma from "@/shared/lib/prisma/db";
 import { notFound } from "next/navigation";
 import { Container, PizzaImage, HeadTitle, GroupVariants } from "@/shared/components/shared";
 

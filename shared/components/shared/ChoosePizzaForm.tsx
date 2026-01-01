@@ -13,7 +13,7 @@ import {
   mapPizzaType,
 } from "@/shared/constants/pizza";
 import { useEffect, useState } from "react";
-import { Ingredient, ProductVariation } from "@/shared/lib/generated/prisma/client";
+import { Ingredient, ProductVariation } from "../../lib/prisma/generatedPrisma/client";
 import { IngredientItem } from "./IngredientItem";
 import { useSet } from "react-use";
 

@@ -1,4 +1,4 @@
-import { Ingredient } from "@/shared/lib/generated/prisma/client";
+import { Ingredient } from "../lib/prisma/generatedPrisma/client";
 import { Api } from "@/shared/services/api-client";
 import React, { useState, useEffect } from "react";
 
