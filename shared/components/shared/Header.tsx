@@ -2,8 +2,8 @@ import { cn } from "@/shared/lib/utils";
 import { Container } from "./Container";
 import Image from "next/image";
 import { Button } from "../ui/index";
-import { ShoppingCart, User, ArrowRight } from "lucide-react";
-import { SearchInput } from "./index";
+import { User } from "lucide-react";
+import { CartButton, SearchInput } from "./index";
 interface Props {
   className?: string;
 }
@@ -33,20 +33,8 @@ function Header({ className }: Props) {
             <User size={16} />
             Enter
           </Button>
-          <div>
-            <Button className="group relative">
-              <b>520$</b>
-              <span className="h-full w-px bg-white/30 mx-3 "></span>
-              <div className="flex items-center gap-1 trasition duration-300 group-hover:opacity-0">
-                <ShoppingCart size={16} className=" relative" strokeWidth={2} />
-                <b>3</b>
-              </div>
-              <ArrowRight
-                size={20}
-                className=" absolute right-5 transition duration-300 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"
-              />
-            </Button>
-          </div>
+
+          <CartButton />
         </div>
       </Container>
     </header>
