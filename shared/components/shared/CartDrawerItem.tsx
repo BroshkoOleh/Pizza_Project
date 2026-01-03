@@ -13,7 +13,8 @@ interface Props {
   name: string;
   price: number;
   quantity: number;
-  onClickCountButton?: (type: "plus" | "minus") => void;
+  changeQuantityCartItem?: (type: "plus" | "minus") => void;
+  removeCartItem?: () => void;
   className?: string;
 }
 
@@ -24,7 +25,8 @@ export function CartDrawerItem({
   name,
   price,
   quantity,
-  onClickCountButton,
+  changeQuantityCartItem,
+  removeCartItem,
   className,
 }: Props) {
   return (
@@ -49,10 +51,14 @@ export function CartDrawerItem({
         <hr className="my-3" />
 
         <div className="flex items-center justify-between">
-          <CountButton onClick={onClickCountButton} value={quantity} />
+          <CountButton onClick={changeQuantityCartItem} value={quantity} />
           <div className="flex items-center gap-3">
             <h2 className="font-bold">{price} $</h2>
-            <Trash2Icon className="text-gray-400 cursor-pointer hover:text-gray-600" size={16} />
+            <Trash2Icon
+              onClick={removeCartItem}
+              className="text-gray-400 cursor-pointer hover:text-gray-600"
+              size={16}
+            />
           </div>
         </div>
       </div>

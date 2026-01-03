@@ -29,13 +29,14 @@ export const CartDrawer = ({ className, children }: Props) => {
   const totalAmount = useCartStore((state) => state.totalAmount);
   const fetchCartItems = useCartStore((state) => state.fetchCartItems);
   const updateItemQuantity = useCartStore((state) => state.updateItemQuantity);
+  const deleteCartItem = useCartStore((state) => state.deleteCartItem);
   const items = useCartStore((state) => state.items);
 
   useEffect(() => {
     fetchCartItems();
   }, []);
 
-  const onClickCountButton = (id: string, quantity: number, type: "plus" | "minus") => {
+  const handleQuantityCartItem = (id: string, quantity: number, type: "plus" | "minus") => {
     const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
     updateItemQuantity(id, newQuantity);
   };
@@ -68,7 +69,8 @@ export const CartDrawer = ({ className, children }: Props) => {
             name={"Paperoni Fresh"}
             price={item.price}
             quantity={item.quantity}
-            onClickCountButton={(type) => onClickCountButton(item.id, item.quantity, type)}
+            changeQuantityCartItem={(type) => handleQuantityCartItem(item.id, item.quantity, type)}
+            removeCartItem={() => deleteCartItem(item.id)}
           />
         ))}
         <div className="  overflow-auto scrollbar flex-1"></div>

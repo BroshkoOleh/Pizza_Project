@@ -18,11 +18,8 @@ export interface CartState {
 
   /* Add item to cart request */
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  addCartItem: (values: any) => Promise<void>;
-
   /* Remove item from cart request */
-  removeCartItem: (id: string) => Promise<void>;
+  deleteCartItem: (id: string) => Promise<void>;
 }
 
 export const useCartStore = create<CartState>((set, get) => ({
@@ -57,10 +54,23 @@ export const useCartStore = create<CartState>((set, get) => ({
     }
   },
 
-  removeCartItem: async (id: number) => {
-
+  deleteCartItem: async (id: string) => {
+    try {
+      set((state) => ({
+        loading: true,
+        error: false,
+        items: state.items.map((item) => (item.id === id ? { ...item, disabled: true } : item)),
+      }));
+      const data = await Api.cart.deleteCartItem(id);
+      set(getCartDetails(data));
+    } catch (error) {
+      console.error(error);
+      set({ error: true });
+    } finally {
+      set((state) => ({
+        loading: false,
+        items: state.items.map((item) => ({ ...item, disabled: false })),
+      }));
+    }
   },
-
-  addCartItem: async (values: CreateCartItemValues) => {
-
 }));
