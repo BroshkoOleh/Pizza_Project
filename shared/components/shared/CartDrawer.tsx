@@ -1,6 +1,6 @@
 "use client";
 
-import { PropsWithChildren, ReactNode } from "react";
+import { PropsWithChildren, ReactNode, useEffect } from "react";
 
 import {
   Sheet,
@@ -17,6 +17,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CartDrawerItem } from "./CartDrawerItem";
 import { getCartItemDetails } from "@/shared/lib/helpers";
+import { useCartStore } from "@/shared/store";
+import { PizzaSize, PizzaType } from "@/shared/constants/pizza";
 
 interface Props {
   className?: string;
@@ -24,33 +26,52 @@ interface Props {
 }
 
 export const CartDrawer = ({ className, children }: Props) => {
-  const totalAmount = 200;
+  const totalAmount = useCartStore((state) => state.totalAmount);
+  const fetchCartItems = useCartStore((state) => state.fetchCartItems);
+  const updateItemQuantity = useCartStore((state) => state.updateItemQuantity);
+  const items = useCartStore((state) => state.items);
+
+  useEffect(() => {
+    fetchCartItems();
+  }, []);
+
+  const onClickCountButton = (id: string, quantity: number, type: "plus" | "minus") => {
+    const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
+    updateItemQuantity(id, newQuantity);
+  };
+  // const totalAmount = 200;
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent className="flex flex-col  pb-0 bg-[#F4F1EE] max-w-[800px] w-full">
         <SheetHeader>
           <SheetTitle>
-            There are <span className="font-bold">3 goods in the cart </span>
+            There are <span className="font-bold">{items.length} goods in the cart </span>
           </SheetTitle>
         </SheetHeader>
         {/* items */}
-        <div className="  overflow-auto scrollbar flex-1">
+
+        {items.map((item) => (
           <CartDrawerItem
-            id={"1c8fb08d-57b5-4e37-a454-0af73ba90d78"}
-            imageUrl={"/pizzas/paperoni.webp"}
-            details={getCartItemDetails(2, 30, [
-              { name: "Cheese crust" },
-              { name: "Creamy mozzarella" },
-              { name: "Cheddar and parmesan cheeses" },
-              { name: "Spicy jalapeño pepper" },
-              { name: "Tender chickens" },
-            ])}
+            key={item.id}
+            id={item.id}
+            imageUrl={item.imageUrl}
+            details={
+              item.pizzaSize && item.pizzaType
+                ? getCartItemDetails(
+                    item.pizzaType as PizzaType,
+                    item.pizzaSize as PizzaSize,
+                    item.ingredients
+                  )
+                : ""
+            }
             name={"Paperoni Fresh"}
-            price={302}
-            quantity={1}
+            price={item.price}
+            quantity={item.quantity}
+            onClickCountButton={(type) => onClickCountButton(item.id, item.quantity, type)}
           />
-        </div>
+        ))}
+        <div className="  overflow-auto scrollbar flex-1"></div>
 
         <SheetFooter className=" bg-white p-8">
           <div className="flex mb-4">

@@ -9,3 +9,11 @@ export const search = async (query: string): Promise<Product[]> => {
 
   return data.products;
 };
+// FOR EXAMPLE
+// export const search = async (query: string): Promise<Product[]> => {
+//   const { data } = await axios.get<{ products: Product[] }>(`api/products/search`, {
+//     params: { query },
+//   });
+
+//   return data.products;
+// };

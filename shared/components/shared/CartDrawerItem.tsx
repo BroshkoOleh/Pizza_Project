@@ -13,10 +13,20 @@ interface Props {
   name: string;
   price: number;
   quantity: number;
+  onClickCountButton?: (type: "plus" | "minus") => void;
   className?: string;
 }
 
-export function CartDrawerItem({ id, imageUrl, details, name, price, quantity, className }: Props) {
+export function CartDrawerItem({
+  id,
+  imageUrl,
+  details,
+  name,
+  price,
+  quantity,
+  onClickCountButton,
+  className,
+}: Props) {
   return (
     <div className={cn("flex bg-white p-5 gap-6 mb-2", className)}>
       <Image
@@ -39,7 +49,7 @@ export function CartDrawerItem({ id, imageUrl, details, name, price, quantity, c
         <hr className="my-3" />
 
         <div className="flex items-center justify-between">
-          <CountButton onClick={(type) => console.log(type)} value={quantity} />
+          <CountButton onClick={onClickCountButton} value={quantity} />
           <div className="flex items-center gap-3">
             <h2 className="font-bold">{price} $</h2>
             <Trash2Icon className="text-gray-400 cursor-pointer hover:text-gray-600" size={16} />
