@@ -12,6 +12,7 @@ import { IngredientItem } from "./IngredientItem";
 
 import { getPizzaDetails } from "@/shared/lib/helpers";
 import { usePizzaOptions } from "@/shared/hooks";
+import { useRouter } from "next/navigation";
 
 interface Props {
   imageUrl: string;
@@ -19,7 +20,7 @@ interface Props {
   className?: string;
   ingredients: Ingredient[];
   variations: ProductVariation[];
-  onClickAddCart?: VoidFunction;
+  onClickAddCart: (variationId: string, ingredients: string[]) => void;
 }
 
 export function ChoosePizzaForm({
@@ -30,9 +31,18 @@ export function ChoosePizzaForm({
   onClickAddCart,
   className,
 }: Props) {
-  const { size, type, selectedIngredientsIds, availableSizes, setSize, setType, addIngredient } =
-    usePizzaOptions(variations);
+  const {
+    size,
+    type,
+    selectedIngredientsIds,
+    availableSizes,
+    currentVariationId,
+    setSize,
+    setType,
+    addIngredient,
+  } = usePizzaOptions(variations);
 
+  const router = useRouter();
   const { totalPrice, textDetails } = getPizzaDetails(
     type,
     size,
@@ -42,12 +52,10 @@ export function ChoosePizzaForm({
   );
 
   const handleClickAdd = () => {
-    onClickAddCart?.();
-    console.log({
-      size,
-      type,
-      ingredients: selectedIngredientsIds,
-    });
+    if (currentVariationId) {
+      onClickAddCart(currentVariationId, Array.from(selectedIngredientsIds));
+    }
+    router.back();
   };
 
   return (

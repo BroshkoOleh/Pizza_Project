@@ -66,7 +66,7 @@ export const CartDrawer = ({ className, children }: Props) => {
                   )
                 : ""
             }
-            name={"Paperoni Fresh"}
+            name={item.name}
             price={item.price}
             quantity={item.quantity}
             changeQuantityCartItem={(type) => handleQuantityCartItem(item.id, item.quantity, type)}

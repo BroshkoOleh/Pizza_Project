@@ -9,22 +9,11 @@ interface Props {
   imageUrl: string;
   name: string;
   className?: string;
-
-  //   ingredients: IProduct["ingredients"];
-  //   variation: IProduct["variation"];
-  onClickAdd?: VoidFunction;
+  price: number;
+  onClickAddCart?: () => void;
 }
 
-export function ChooseProductForm({
-  imageUrl,
-  name,
-
-  onClickAdd,
-  className,
-}: Props) {
-  const textDetails = "30sm , traditional pizza";
-  const totalPrice = "200";
-
+export function ChooseProductForm({ imageUrl, name, onClickAddCart, price, className }: Props) {
   return (
     <div className={cn(className, "flex flex-1")}>
       <div className={cn("flex items-center justify-center flex-1 relative w-full", className)}>
@@ -39,10 +28,13 @@ export function ChooseProductForm({
       </div>
       <div className="w-[490px] bg-[#f7f6f5] p-7">
         <DialogTitle className="font-extrabold mb-1">{name}</DialogTitle>
-        <p className="text-gray-400"> {textDetails} </p>
+        {/* <p className="text-gray-400"> {textDetails} </p> */}
 
-        <Button className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
-          Add to Cart for {totalPrice} $
+        <Button
+          onClick={onClickAddCart}
+          className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
+        >
+          Add to Cart for {price} $
         </Button>
       </div>
     </div>
