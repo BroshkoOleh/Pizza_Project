@@ -52,28 +52,31 @@ export const CartDrawer = ({ className, children }: Props) => {
         </SheetHeader>
         {/* items */}
 
-        {items.map((item) => (
-          <CartDrawerItem
-            key={item.id}
-            id={item.id}
-            imageUrl={item.imageUrl}
-            details={
-              item.pizzaSize && item.pizzaType
-                ? getCartItemDetails(
-                    item.pizzaType as PizzaType,
-                    item.pizzaSize as PizzaSize,
-                    item.ingredients
-                  )
-                : ""
-            }
-            name={item.name}
-            price={item.price}
-            quantity={item.quantity}
-            changeQuantityCartItem={(type) => handleQuantityCartItem(item.id, item.quantity, type)}
-            removeCartItem={() => deleteCartItem(item.id)}
-          />
-        ))}
-        <div className="  overflow-auto scrollbar flex-1"></div>
+        <div className="  overflow-auto scrollbar flex-1">
+          {items.map((item) => (
+            <CartDrawerItem
+              key={item.id}
+              id={item.id}
+              imageUrl={item.imageUrl}
+              details={
+                item.pizzaSize && item.pizzaType
+                  ? getCartItemDetails(
+                      item.pizzaType as PizzaType,
+                      item.pizzaSize as PizzaSize,
+                      item.ingredients
+                    )
+                  : ""
+              }
+              name={item.name}
+              price={item.price}
+              quantity={item.quantity}
+              changeQuantityCartItem={(type) =>
+                handleQuantityCartItem(item.id, item.quantity, type)
+              }
+              removeCartItem={() => deleteCartItem(item.id)}
+            />
+          ))}
+        </div>
 
         <SheetFooter className=" bg-white p-8">
           <div className="flex mb-4">

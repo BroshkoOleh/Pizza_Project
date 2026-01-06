@@ -1,6 +1,4 @@
 import { cn } from "@/shared/lib/utils";
-import { PizzaImage } from "./PizzaImage";
-import { HeadTitle } from "./HeadTitle";
 import { Button } from "../ui";
 import { DialogTitle } from "@/shared/components/ui/dialog";
 import Image from "next/image";
@@ -10,10 +8,18 @@ interface Props {
   name: string;
   className?: string;
   price: number;
+  loading?: boolean;
   onClickAddCart?: () => void;
 }
 
-export function ChooseProductForm({ imageUrl, name, onClickAddCart, price, className }: Props) {
+export function ChooseProductForm({
+  imageUrl,
+  name,
+  onClickAddCart,
+  price,
+  loading,
+  className,
+}: Props) {
   return (
     <div className={cn(className, "flex flex-1")}>
       <div className={cn("flex items-center justify-center flex-1 relative w-full", className)}>
@@ -31,6 +37,7 @@ export function ChooseProductForm({ imageUrl, name, onClickAddCart, price, class
         {/* <p className="text-gray-400"> {textDetails} </p> */}
 
         <Button
+          loading={loading}
           onClick={onClickAddCart}
           className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
         >

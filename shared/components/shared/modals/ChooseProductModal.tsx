@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { ChooseProductForm } from "../ChooseProductForm";
 import { ChoosePizzaForm } from "../ChoosePizzaForm";
 import { useCartStore } from "@/shared/store";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 interface Props {
   product: Product;
@@ -18,18 +20,25 @@ export function ChooseProductModal({ product, className }: Props) {
   const isPizzaForm = Boolean(firstItem.pizzaType);
 
   const addCartItem = useCartStore((state) => state.addCartItem);
+  const loading = useCartStore((state) => state.loading);
 
   const onAddProduct = async () => {
     try {
       await addCartItem({ productVariationId: firstItem.id });
+      toast.success("The product was added to the cart successfully");
+      router.back();
     } catch (error) {
+      toast.error("Failed to add the product to cart");
       console.error(error);
     }
   };
   const onAddPizza = async (productVariationId: string, ingredients: string[]) => {
     try {
       await addCartItem({ productVariationId, ingredients });
+      toast.success("The Pizza was added to the cart successfully");
+      router.back();
     } catch (error) {
+      toast.error("Failed to add  Pizza to the cart");
       console.error(error);
     }
   };
@@ -49,6 +58,7 @@ export function ChooseProductModal({ product, className }: Props) {
             ingredients={product.ingredients}
             variations={product.variation}
             onClickAddCart={onAddPizza}
+            loading={loading}
           />
         ) : (
           <ChooseProductForm
@@ -56,6 +66,7 @@ export function ChooseProductModal({ product, className }: Props) {
             name={product.name}
             onClickAddCart={onAddProduct}
             price={firstItem.price}
+            loading={loading}
           />
         )}
       </DialogContent>

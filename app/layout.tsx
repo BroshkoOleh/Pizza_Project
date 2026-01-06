@@ -1,4 +1,5 @@
 import { Nunito } from "next/font/google";
+import toast, { Toaster } from "react-hot-toast";
 
 import "./globals.css";
 // import { Providers } from "@/shared/components/shared/providers";
@@ -22,6 +23,7 @@ export default function MainRootLayout({
       <body className={nunito.className}>
         {/* <Providers>{children}</Providers> */}
         {children}
+        <Toaster />
       </body>
     </html>
   );
