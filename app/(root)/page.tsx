@@ -7,18 +7,26 @@ import {
   ProductsGroupList,
 } from "@/shared/components/shared/index";
 import { Suspense } from "react";
+import { findPizzas } from "@/shared/lib/helpers";
+import { GetSearchParams } from "@/shared/lib/helpers/findPizzas";
 
-export default async function Home() {
-  const categories = await prisma.category.findMany({
-    include: {
-      products: {
-        include: {
-          ingredients: true,
-          variation: true,
-        },
-      },
-    },
-  });
+interface Props {
+  searchParams: Promise<GetSearchParams>;
+}
+
+export default async function Home({ searchParams }: Props) {
+  const params = await searchParams;
+  const categories = await findPizzas(params);
+  // const categories = await prisma.category.findMany({
+  //   include: {
+  //     products: {
+  //       include: {
+  //         ingredients: true,
+  //         variation: true,
+  //       },
+  //     },
+  //   },
+  // });
 
   return (
     <>

@@ -4,3 +4,4 @@ export { getPizzaDetails } from "./getPizzaDetails";
 export { getCartItemDetails } from "./getCartItemDetails";
 export { getCartDetails } from "./getCartDetails";
 export { calcCartItemTotalPrice } from "./calcCartItemTotalPrice";
+export { findPizzas } from "./findPizzas";
