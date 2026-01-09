@@ -12,6 +12,7 @@ import { IngredientItem } from "./IngredientItem";
 
 import { getPizzaDetails } from "@/shared/lib/helpers";
 import { usePizzaOptions } from "@/shared/hooks";
+import { HeadTitle } from "./HeadTitle";
 
 interface Props {
   imageUrl: string;
@@ -20,6 +21,7 @@ interface Props {
   ingredients: Ingredient[];
   variations: ProductVariation[];
   loading?: boolean;
+  isModal: boolean;
   onClickAddCart: (variationId: string, ingredients: string[]) => void;
 }
 
@@ -30,6 +32,7 @@ export function ChoosePizzaForm({
   variations,
   onClickAddCart,
   loading,
+  isModal,
   className,
 }: Props) {
   const {
@@ -61,7 +64,12 @@ export function ChoosePizzaForm({
     <div className={cn(className, "flex flex-1")}>
       <PizzaImage imageUrl={imageUrl} size={size} />
       <div className="w-[490px] bg-[#f7f6f5] p-7">
-        <DialogTitle className="font-extrabold mb-1">{name}</DialogTitle>
+        {isModal ? (
+          <DialogTitle className="font-extrabold mb-1">{name}</DialogTitle>
+        ) : (
+          <HeadTitle className="font-extrabold mb-1" text={name} />
+        )}
+
         <p className="text-gray-400"> {textDetails} </p>
 
         <div className={cn(className, "flex flex-col gap-4 mt-5")}>
@@ -77,7 +85,7 @@ export function ChoosePizzaForm({
           />
         </div>
 
-        <div className="bg-gray-50 p-5 rounded-md h-[400px] overflow-auto scrollbar mt-4">
+        <div className="bg-gray-50 p-5 rounded-md h-[350px] overflow-auto scrollbar mt-4">
           <div className="grid grid-cols-3 gap-3">
             {ingredients.map((ingredient) => (
               <IngredientItem

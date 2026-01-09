@@ -2,6 +2,7 @@ import { cn } from "@/shared/lib/utils";
 import { Button } from "../ui";
 import { DialogTitle } from "@/shared/components/ui/dialog";
 import Image from "next/image";
+import { HeadTitle } from "./HeadTitle";
 
 interface Props {
   imageUrl: string;
@@ -9,6 +10,7 @@ interface Props {
   className?: string;
   price: number;
   loading?: boolean;
+  isModal: boolean;
   onClickAddCart?: () => void;
 }
 
@@ -18,6 +20,7 @@ export function ChooseProductForm({
   onClickAddCart,
   price,
   loading,
+  isModal,
   className,
 }: Props) {
   return (
@@ -33,7 +36,11 @@ export function ChooseProductForm({
         />
       </div>
       <div className="w-[490px] bg-[#f7f6f5] p-7">
-        <DialogTitle className="font-extrabold mb-1">{name}</DialogTitle>
+        {isModal ? (
+          <DialogTitle className="font-extrabold mb-1">{name}</DialogTitle>
+        ) : (
+          <HeadTitle className="font-extrabold mb-1" text={name} />
+        )}
         {/* <p className="text-gray-400"> {textDetails} </p> */}
 
         <Button

@@ -67,6 +67,7 @@ export const CartDrawer = ({ className, children }: Props) => {
                     )
                   : ""
               }
+              disabled={item.disabled}
               name={item.name}
               price={item.price}
               quantity={item.quantity}

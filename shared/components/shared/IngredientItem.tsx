@@ -23,10 +23,10 @@ export function IngredientItem({ imageUrl, name, price, active, onClick, classNa
     >
       {active && <CircleCheck className="absolute top-2 right-2 text-primary" />}
 
-      <Image src={imageUrl} alt="Ingredient" width={110} height={110} priority />
+      <Image src={imageUrl} alt="Ingredient" width={80} height={80} priority />
 
       <span className="text-xs mb-1">{name}</span>
-      <span className="font-bold">{price} $</span>
+      <span className=" font-bold">{price} $</span>
     </div>
   );
 }

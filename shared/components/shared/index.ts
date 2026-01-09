@@ -19,4 +19,5 @@ export { ChoosePizzaForm } from "./ChoosePizzaForm";
 export { IngredientItem } from "./IngredientItem";
 export { CartDrawer } from "./CartDrawer";
 export { CartDrawerItem } from "./CartDrawerItem";
+export { ProductForm } from "./modals/ProductForm";
 export * from "./modals";

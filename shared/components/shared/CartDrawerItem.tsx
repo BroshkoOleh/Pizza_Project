@@ -1,25 +1,16 @@
 import { cn } from "@/shared/lib/utils";
-import React from "react";
-import { Ingredient } from "@/shared/lib/prisma/generatedPrisma/client";
 import { CountButton } from "./CountButton";
 import { Trash2Icon } from "lucide-react";
 import Image from "next/image";
+import { CartItemProps } from "@/shared/types";
 
-interface Props {
-  id: string;
-  imageUrl: string;
-  details: string;
-  //   ingredients: Ingredient[];
-  name: string;
-  price: number;
-  quantity: number;
+interface Props extends CartItemProps {
   changeQuantityCartItem?: (type: "plus" | "minus") => void;
   removeCartItem?: () => void;
   className?: string;
 }
 
 export function CartDrawerItem({
-  id,
   imageUrl,
   details,
   name,
@@ -27,10 +18,20 @@ export function CartDrawerItem({
   quantity,
   changeQuantityCartItem,
   removeCartItem,
+  disabled,
   className,
 }: Props) {
+  console.log("[CartDrawerItem] disabled", disabled);
   return (
-    <div className={cn("flex bg-white p-5 gap-6 mb-2", className)}>
+    <div
+      className={cn(
+        "flex bg-white p-5 gap-6 mb-2",
+        {
+          "opacity-50 pointer-events-none": disabled,
+        },
+        className
+      )}
+    >
       <Image
         src={imageUrl}
         alt="cart item image"
