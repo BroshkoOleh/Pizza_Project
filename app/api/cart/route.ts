@@ -63,13 +63,61 @@ export async function POST(req: NextRequest) {
 
     const data = (await req.json()) as CreateCartItemValues;
 
-    const findCartItem = await prisma.cartItem.findFirst({
+    const cartItems = await prisma.cartItem.findMany({
       where: {
         cartId: userCart.id,
         productVariationId: data.productVariationId,
-        ingredients: { every: { id: { in: data.ingredients } } },
+      },
+      include: {
+        ingredients: {
+          select: { id: true },
+        },
       },
     });
+    // ATTEMPT TO AVOID SORTING
+    // MORE UNDERSTANDABLE CODE BUT LESS EFFICIENT THAN OPTION WITH SORTING
+    // let findCartItem = null;
+
+    // for (const item of cartItems) {
+    //   const itemIngredientIds = item.ingredients.map((ing) => ing.id);
+    //   const newIngredientIds = data.ingredients || [];
+
+    //   // Check that the lengths are the same
+    //   if (itemIngredientIds.length !== newIngredientIds.length) {
+    //     continue; // SKIP THIS ITEM
+    //   }
+
+    //   // Check that all elements from item exist in data
+    //   const allItemIngredientsInData = itemIngredientIds.every((id) =>
+    //     newIngredientIds.includes(id)
+    //   );
+
+    //   // Check that all elements from data exist in item
+    //   const allDataIngredientsInItem = newIngredientIds.every((id) =>
+    //     itemIngredientIds.includes(id)
+    //   );
+
+    //   // If both conditions are true, the arrays are identical
+    //   if (allItemIngredientsInData && allDataIngredientsInItem) {
+    //     findCartItem = item;
+    //     break;
+    //   }
+    // }
+    const sortedNewIngredients = [...(data.ingredients || [])].sort();
+
+    let findCartItem = null;
+
+    for (const item of cartItems) {
+      const sortedItemIngredients = item.ingredients.map((ing) => ing.id).sort();
+
+      if (
+        sortedItemIngredients.length === sortedNewIngredients.length &&
+        sortedItemIngredients.every((id, index) => id === sortedNewIngredients[index]) // BECOUSE OF SORTING WE CAN COMPARE ITEMS THROUGH POSITION USING INDEX OF ARRAY
+      ) {
+        findCartItem = item;
+        break;
+      }
+    }
 
     if (findCartItem) {
       await prisma.cartItem.update({
@@ -86,7 +134,9 @@ export async function POST(req: NextRequest) {
           cartId: userCart.id,
           productVariationId: data.productVariationId,
           quantity: 1,
-          ingredients: { connect: data.ingredients?.map((id) => ({ id })) },
+          ingredients: {
+            connect: data.ingredients?.map((id) => ({ id })) || [],
+          },
         },
       });
     }
