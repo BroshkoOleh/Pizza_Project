@@ -20,4 +20,8 @@ export { IngredientItem } from "./IngredientItem";
 export { CartDrawer } from "./CartDrawer";
 export { CartDrawerItem } from "./CartDrawerItem";
 export { ProductForm } from "./modals/ProductForm";
+export { WhiteBlock } from "./WhiteBlock";
+export { CheckoutItemDetails } from "./CheckoutItemDetails";
+export { CheckoutItem } from "./CheckoutItem";
+export { CheckoutItemSkeleton } from "./CheckoutItemSkeleton";
 export * from "./modals";

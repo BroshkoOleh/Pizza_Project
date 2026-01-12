@@ -6,12 +6,14 @@ import { User } from "lucide-react";
 import { CartButton, SearchInput } from "./index";
 import Link from "next/link";
 interface Props {
+  hasSearch?: boolean;
+  hasCart?: boolean;
   className?: string;
 }
 
-function Header({ className }: Props) {
+function Header({ hasSearch = true, hasCart = true, className }: Props) {
   return (
-    <header className={cn("border border-b", className)}>
+    <header className={cn(" border-b", className)}>
       <Container className="flex items-center justify-between py-8">
         {/* Left Side */}
         <Link href="/">
@@ -24,9 +26,11 @@ function Header({ className }: Props) {
           </div>
         </Link>
 
-        <div className="mx-10 flex-1">
-          <SearchInput />
-        </div>
+        {hasSearch && (
+          <div className="mx-10 flex-1">
+            <SearchInput />
+          </div>
+        )}
 
         {/* Right Side */}
 
@@ -35,8 +39,7 @@ function Header({ className }: Props) {
             <User size={16} />
             Enter
           </Button>
-
-          <CartButton />
+          {hasCart && <CartButton />}
         </div>
       </Container>
     </header>

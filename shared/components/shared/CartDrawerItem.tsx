@@ -11,6 +11,7 @@ interface Props extends CartItemProps {
 }
 
 export function CartDrawerItem({
+  id,
   imageUrl,
   details,
   name,
@@ -21,7 +22,13 @@ export function CartDrawerItem({
   disabled,
   className,
 }: Props) {
-  console.log("[CartDrawerItem] disabled", disabled);
+  console.log("[CartDrawerItem] props", {
+    id: id,
+    imageUrl: imageUrl,
+    details: details,
+    name: name,
+    quantity: quantity,
+  });
   return (
     <div
       className={cn(
