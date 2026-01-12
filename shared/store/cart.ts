@@ -3,7 +3,6 @@ import { Api } from "../services/api-client";
 import { getCartDetails } from "../lib/helpers";
 import { CartStateItem } from "../lib/helpers/getCartDetails";
 import { CreateCartItemValues } from "../services/dto/cartDto";
-// import { CreateCartItemValues } from "../services/dto/cart.dto";
 
 export interface CartState {
   loading: boolean;
@@ -19,8 +18,7 @@ export interface CartState {
 
   /* Add item to cart request */
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  addCartItem: (values: any) => Promise<void>;
+  addCartItem: (values: CreateCartItemValues) => Promise<void>;
 
   /* Remove item from cart request */
   deleteCartItem: (id: string) => Promise<void>;

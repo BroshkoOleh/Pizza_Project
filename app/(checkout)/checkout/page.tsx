@@ -1,15 +1,24 @@
+"use client";
 import {
   CheckoutItem,
-  CheckoutItemDetails,
+  CheckoutSidebar,
   Container,
   HeadTitle,
   WhiteBlock,
 } from "@/shared/components/shared";
-import { Button, Input, Textarea } from "@/shared/components/ui";
-import { ArrowRight, Package, Percent, Truck } from "lucide-react";
+import { Input, Textarea } from "@/shared/components/ui";
+import { PizzaSize, PizzaType } from "@/shared/constants/pizza";
+import { useCart } from "@/shared/hooks";
+import { getCartItemDetails } from "@/shared/lib/helpers";
 
 export default function CheckoutPage() {
-  const totalPrice = 200;
+  const { totalAmount, items, updateItemQuantity, deleteCartItem } = useCart();
+
+  const handleQuantityCartItem = (id: string, quantity: number, type: "plus" | "minus") => {
+    const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
+    updateItemQuantity(id, newQuantity);
+  };
+
   return (
     <Container className="mt-5">
       <HeadTitle text={"Placing an order"} className="font-extrabold mb-8 text-[36px]" />
@@ -18,36 +27,26 @@ export default function CheckoutPage() {
         <div className="flex flex-col gap-10 flex-1 mb-20">
           <WhiteBlock title="1. Cart">
             <ul className="flex flex-col gap-5">
-              <CheckoutItem
-                id={"ab6faa57-0790-4908-944a-86e26473d439"}
-                imageUrl={"/pizzas/paperoni.webp"}
-                details={
-                  "traditional 30 sm fbdbdfbfd  fdbbbbbb    fdbbbbbbbbbbbbb bfdddddddddddd bfdddddddddddd"
-                }
-                name={"Paperoni Fresh"}
-                price={200}
-                quantity={1}
-              />
-              <CheckoutItem
-                id={"ab6faa57-0790-4908-944a-86e26473d439"}
-                imageUrl={"/pizzas/paperoni.webp"}
-                details={
-                  "traditional 30 sm fbdbdfbfd  fdbbbbbb    fdbbbbbbbbbbbbb bfdddddddddddd bfdddddddddddd"
-                }
-                name={"Paperoni Fresh"}
-                price={200}
-                quantity={1}
-              />
-              <CheckoutItem
-                id={"ab6faa57-0790-4908-944a-86e26473d439"}
-                imageUrl={"/pizzas/paperoni.webp"}
-                details={
-                  "traditional 30 sm fbdbdfbfd  fdbbbbbb    fdbbbbbbbbbbbbb bfdddddddddddd bfdddddddddddd"
-                }
-                name={"Paperoni Fresh"}
-                price={200}
-                quantity={1}
-              />
+              {items.map((item) => (
+                <CheckoutItem
+                  key={item.id}
+                  id={item.id}
+                  imageUrl={item.imageUrl}
+                  details={getCartItemDetails(
+                    item.pizzaType as PizzaType,
+                    item.pizzaSize as PizzaSize,
+                    item.ingredients
+                  )}
+                  name={item.name}
+                  price={item.price}
+                  quantity={item.quantity}
+                  disabled={item.disabled}
+                  changeQuantityCartItem={(type) =>
+                    handleQuantityCartItem(item.id, item.quantity, type)
+                  }
+                  removeCartItem={() => deleteCartItem(item.id)}
+                />
+              ))}
             </ul>
           </WhiteBlock>
           <WhiteBlock title="2. Personal data">
@@ -65,48 +64,7 @@ export default function CheckoutPage() {
             </div>
           </WhiteBlock>
         </div>
-        {/* RIGHT SIDE  */}
-        <div className="w-[450px]">
-          <WhiteBlock className="p-6 sticky top-4">
-            <div className="flex flex-col gap-1">
-              <span className="text-xl">Total:</span>
-              <span className="text-[32px] font-extrabold">{totalPrice}$</span>
-            </div>
-
-            <CheckoutItemDetails
-              title={
-                <div className="flex items-center">
-                  <Package size={18} className="mr-2 text-gray-400" />
-                  Cost of goods:
-                </div>
-              }
-              value={"350"}
-            />
-            <CheckoutItemDetails
-              title={
-                <div className="flex items-center">
-                  <Percent size={18} className="mr-2 text-gray-400" />
-                  Tax:
-                </div>
-              }
-              value={"350"}
-            />
-            <CheckoutItemDetails
-              title={
-                <div className="flex items-center">
-                  <Truck size={18} className="mr-2 text-gray-400" />
-                  Delivery
-                </div>
-              }
-              value={"350"}
-            />
-
-            <Button type="submit" className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
-              Proceed to payment
-              <ArrowRight className="w-5 ml-2" />
-            </Button>
-          </WhiteBlock>
-        </div>
+        <CheckoutSidebar totalAmount={totalAmount} />
       </div>
     </Container>
   );

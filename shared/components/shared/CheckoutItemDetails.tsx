@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 interface Props {
   title: ReactNode | string;
-  value: string;
+  value: number;
   className?: string;
 }
 

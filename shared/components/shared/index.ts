@@ -24,4 +24,5 @@ export { WhiteBlock } from "./WhiteBlock";
 export { CheckoutItemDetails } from "./CheckoutItemDetails";
 export { CheckoutItem } from "./CheckoutItem";
 export { CheckoutItemSkeleton } from "./CheckoutItemSkeleton";
+export { CheckoutSidebar } from "./CheckoutSidebar";
 export * from "./modals";
