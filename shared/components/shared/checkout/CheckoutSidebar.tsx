@@ -1,8 +1,8 @@
 import React from "react";
-import { WhiteBlock } from "./WhiteBlock";
-import { CheckoutItemDetails } from "./CheckoutItemDetails";
+import { WhiteBlock } from "../WhiteBlock";
+import { CheckoutItemDetails } from "../CheckoutItemDetails";
 import { ArrowRight, Package, Percent, Truck } from "lucide-react";
-import { Button } from "../ui";
+import { Button } from "../../ui";
 
 interface Props {
   className?: string;
