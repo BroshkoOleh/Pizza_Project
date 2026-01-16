@@ -9,11 +9,11 @@ interface Props {
 
 export function CheckoutPersonalData({ className }: Props) {
   return (
-    <WhiteBlock title="2. Personal data">
+    <WhiteBlock title="2. Personal data" className={className}>
       <div className="grid grid-cols-2 gap-5">
-        <Input name="firstName" className="text-base" placeholder="Name" />
-        <Input name="lastName" className="text-base" placeholder="Last name" />
-        <Input name="email" className="text-base" placeholder="E-Mail" />
+        <FormInput name="firstName" className="text-base" placeholder="Name" />
+        <FormInput name="lastName" className="text-base" placeholder="Last name" />
+        <FormInput name="email" className="text-base" placeholder="E-Mail" />
         <FormInput name="phone" className="text-base" placeholder="Phone" />
       </div>
     </WhiteBlock>

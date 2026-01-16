@@ -1,6 +1,7 @@
 import React from "react";
 import { WhiteBlock } from "../WhiteBlock";
-import { Input, Textarea } from "../../ui";
+import { Input } from "../../ui";
+import { FormTextarea } from "../form";
 
 interface Props {
   className?: string;
@@ -11,7 +12,12 @@ export function CheckoutDelivery({ className }: Props) {
     <WhiteBlock title="3 Delivery address">
       <div className="flex flex-col gap-5">
         <Input name="adress" className="text-base" placeholder="Delivery adress" />
-        <Textarea className="text-base" rows={5} placeholder="Comments on the order" />
+        <FormTextarea
+          className="text-base"
+          rows={5}
+          placeholder="Comments on the order"
+          name={"comment"}
+        />
       </div>
     </WhiteBlock>
   );

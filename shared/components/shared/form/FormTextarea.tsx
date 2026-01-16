@@ -1,17 +1,18 @@
 "use client";
-import React from "react";
-import { Input } from "../../ui";
-import { ClearButton } from "../ClearButton";
-import { useFormContext } from "react-hook-form";
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+import React from "react";
+import { useFormContext } from "react-hook-form";
+import { Textarea } from "../../ui/textarea";
+import { ClearButton } from "../ClearButton";
+
+interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  className?: string;
   name: string;
   label?: string;
   required?: boolean;
-  className?: string;
 }
 
-export function FormInput({ className, name, label, required, ...props }: Props) {
+export const FormTextarea = ({ className, name, label, required, ...props }: Props) => {
   const {
     register,
     formState: { errors },
@@ -25,18 +26,20 @@ export function FormInput({ className, name, label, required, ...props }: Props)
   const onClickClear = () => {
     setValue(name, "");
   };
+
   return (
     <div className={className}>
-      {label && (
-        <p className="font-medium mb-2">
-          {label} {required && <span className="text-red-500">*</span>}
-        </p>
-      )}
+      <p className="font-medium mb-2">
+        {label} {required && <span className="text-red-500">*</span>}
+      </p>
+
       <div className="relative">
-        <Input className="h-12 text-md" {...register(name)} {...props} />
+        <Textarea className="h-12 text-md" {...register(name)} {...props} />
+
         {value && <ClearButton onClick={onClickClear} />}
       </div>
+
       {errorText && <p className="text-red-500 text-sm mt-2">{errorText}</p>}
     </div>
   );
-}
+};
