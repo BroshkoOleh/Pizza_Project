@@ -1,5 +1,3 @@
-import React from "react";
-import { Input } from "../../ui";
 import { FormInput } from "../form";
 import { WhiteBlock } from "../WhiteBlock";
 
