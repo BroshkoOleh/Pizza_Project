@@ -7,7 +7,7 @@ interface Props {
 
 export function CheckoutDelivery({ className }: Props) {
   return (
-    <WhiteBlock title="3 Delivery address">
+    <WhiteBlock className={className} title="3 Delivery address">
       <div className="flex flex-col gap-3">
         <SearchAddressInput name="address" placeholder="Enter delivery address" />
         <FormTextarea

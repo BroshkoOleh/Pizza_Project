@@ -2,14 +2,15 @@ import React from "react";
 import { WhiteBlock } from "../WhiteBlock";
 import { CheckoutItemDetails } from "../CheckoutItemDetails";
 import { ArrowRight, Package, Percent, Truck } from "lucide-react";
-import { Button } from "../../ui";
+import { Button, Skeleton } from "../../ui";
 
 interface Props {
-  className?: string;
   totalAmount: number;
+  loading?: boolean;
+  className?: string;
 }
 
-export function CheckoutSidebar({ totalAmount, className }: Props) {
+export function CheckoutSidebar({ totalAmount, loading, className }: Props) {
   const TAX = 15;
   const DELIVERY_PRICE = 250;
 
@@ -20,7 +21,11 @@ export function CheckoutSidebar({ totalAmount, className }: Props) {
       <WhiteBlock className="p-6 sticky top-4">
         <div className="flex flex-col gap-1">
           <span className="text-xl">Total:</span>
-          <span className="text-[32px] font-extrabold">{totalPrice}$</span>
+          {loading ? (
+            <Skeleton className="w-full h-11" />
+          ) : (
+            <span className="h-11 text-[32px] font-extrabold">{totalPrice}$</span>
+          )}
         </div>
 
         <CheckoutItemDetails
@@ -30,7 +35,7 @@ export function CheckoutSidebar({ totalAmount, className }: Props) {
               Cost of goods:
             </div>
           }
-          value={totalAmount}
+          value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${totalAmount} $`}
         />
         <CheckoutItemDetails
           title={
@@ -39,7 +44,7 @@ export function CheckoutSidebar({ totalAmount, className }: Props) {
               Tax:
             </div>
           }
-          value={taxPrice}
+          value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${taxPrice} $`}
         />
         <CheckoutItemDetails
           title={
@@ -48,7 +53,7 @@ export function CheckoutSidebar({ totalAmount, className }: Props) {
               Delivery
             </div>
           }
-          value={DELIVERY_PRICE}
+          value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${DELIVERY_PRICE} $`}
         />
 
         <Button type="submit" className="w-full h-14 rounded-2xl mt-6 text-base font-bold">

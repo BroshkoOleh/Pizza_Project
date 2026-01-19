@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 interface Props {
   title: ReactNode | string;
-  value: number;
+  value: ReactNode | number;
   className?: string;
 }
 
@@ -12,7 +12,7 @@ export function CheckoutItemDetails({ title, value, className }: Props) {
         {title}
         <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
       </span>
-      <span className="font-bold text-lg">{value} $</span>
+      <span className="font-bold text-lg">{value}</span>
     </div>
   );
 }
