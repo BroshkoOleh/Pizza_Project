@@ -1,4 +1,3 @@
-import React from "react";
 import { WhiteBlock } from "../WhiteBlock";
 import { CheckoutItemDetails } from "../CheckoutItemDetails";
 import { ArrowRight, Package, Percent, Truck } from "lucide-react";
@@ -7,10 +6,11 @@ import { Button, Skeleton } from "../../ui";
 interface Props {
   totalAmount: number;
   loading?: boolean;
+  submitting?: boolean;
   className?: string;
 }
 
-export function CheckoutSidebar({ totalAmount, loading, className }: Props) {
+export function CheckoutSidebar({ totalAmount, loading, submitting, className }: Props) {
   const TAX = 15;
   const DELIVERY_PRICE = 250;
 
@@ -56,7 +56,11 @@ export function CheckoutSidebar({ totalAmount, loading, className }: Props) {
           value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${DELIVERY_PRICE} $`}
         />
 
-        <Button type="submit" className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
+        <Button
+          loading={submitting}
+          type="submit"
+          className="w-full h-14 rounded-2xl mt-6 text-base font-bold"
+        >
           Proceed to payment
           <ArrowRight className="w-5 ml-2" />
         </Button>

@@ -54,7 +54,7 @@ export function DropDownAddress({
             </CommandGroup>
             {addresses.length === 0 && value.length >= 2 && (
               <CommandEmpty className="py-6 text-center text-gray-500">
-                The address was not founded
+                The address was not found
               </CommandEmpty>
             )}
           </>
