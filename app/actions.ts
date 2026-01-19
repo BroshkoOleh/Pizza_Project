@@ -4,7 +4,8 @@ import { CheckoutFormValues } from "@/shared/constants/checkoutFormSchema";
 import prisma from "@/shared/lib/prisma/db";
 import { OrderStatus } from "@/shared/lib/prisma/generatedPrisma/enums";
 import { cookies } from "next/headers";
-
+import { generatePayOrderEmail } from "@/shared/lib/emailTemplates/generatePayOrderEmail";
+import { sendOrderEmail } from "@/shared/lib/helpers/sendOrderEmail";
 export async function createOrder(data: CheckoutFormValues) {
   console.log(data);
 
@@ -70,9 +71,24 @@ export async function createOrder(data: CheckoutFormValues) {
         cartId: userCart.id,
       },
     });
-
     // TODO: Make payment link creation
+    const paymentUrl = "http://localhost:3000";
 
+    // Sending email via Brevo
+    const htmlContent = generatePayOrderEmail({
+      orderId: order.id,
+      totalAmount: order.totalAmount,
+      address: data.address,
+      phone: data.phone,
+      firstName: data.firstName,
+      paymentUrl,
+    });
+    await sendOrderEmail({
+      orderId: order.id,
+      firstName: data.firstName,
+      email: data.email,
+      htmlContent,
+    });
     return "http://localhost:3000";
   } catch (error) {
     console.log(error);
