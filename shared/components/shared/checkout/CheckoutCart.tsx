@@ -28,25 +28,28 @@ export function CheckoutCart({
   return (
     <WhiteBlock title="1. Cart">
       <ul className="flex flex-col gap-5">
-        {loading && [...Array(3)].map((_, index) => <CheckoutItemSkeleton key={index} />)}
-        {items.map((item) => (
-          <CheckoutItem
-            key={item.id}
-            id={item.id}
-            imageUrl={item.imageUrl}
-            details={getCartItemDetails(
-              item.pizzaType as PizzaType,
-              item.pizzaSize as PizzaSize,
-              item.ingredients
-            )}
-            name={item.name}
-            price={item.price}
-            quantity={item.quantity}
-            disabled={item.disabled}
-            changeQuantityCartItem={(type) => handleQuantityCartItem(item.id, item.quantity, type)}
-            removeCartItem={() => deleteCartItem(item.id)}
-          />
-        ))}
+        {loading
+          ? [...Array(3)].map((_, index) => <CheckoutItemSkeleton key={index} />)
+          : items.map((item) => (
+              <CheckoutItem
+                key={item.id}
+                id={item.id}
+                imageUrl={item.imageUrl}
+                details={getCartItemDetails(
+                  item.pizzaType as PizzaType,
+                  item.pizzaSize as PizzaSize,
+                  item.ingredients,
+                )}
+                name={item.name}
+                price={item.price}
+                quantity={item.quantity}
+                disabled={item.disabled}
+                changeQuantityCartItem={(type) =>
+                  handleQuantityCartItem(item.id, item.quantity, type)
+                }
+                removeCartItem={() => deleteCartItem(item.id)}
+              />
+            ))}
       </ul>
     </WhiteBlock>
   );

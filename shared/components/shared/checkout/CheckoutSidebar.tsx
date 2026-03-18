@@ -2,6 +2,7 @@ import { WhiteBlock } from "../WhiteBlock";
 import { CheckoutItemDetails } from "../CheckoutItemDetails";
 import { ArrowRight, Package, Percent, Truck } from "lucide-react";
 import { Button, Skeleton } from "../../ui";
+import { TAX, DELIVERY_PRICE } from "../../../constants/price";
 
 interface Props {
   totalAmount: number;
@@ -11,9 +12,6 @@ interface Props {
 }
 
 export function CheckoutSidebar({ totalAmount, loading, submitting, className }: Props) {
-  const TAX = 15;
-  const DELIVERY_PRICE = 250;
-
   const taxPrice = (totalAmount * TAX) / 100;
   const totalPrice = totalAmount + taxPrice + DELIVERY_PRICE;
   return (

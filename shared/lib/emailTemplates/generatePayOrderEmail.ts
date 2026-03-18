@@ -4,7 +4,7 @@ export function generatePayOrderEmail(params: {
   address: string;
   phone: string;
   firstName: string;
-  paymentUrl: string;
+  paymentUrl: string | undefined;
 }): string {
   const { orderId, totalAmount, address, phone, firstName, paymentUrl } = params;
   return `
