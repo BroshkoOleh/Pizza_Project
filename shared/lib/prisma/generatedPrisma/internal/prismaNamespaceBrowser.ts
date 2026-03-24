@@ -168,6 +168,8 @@ export const OrderScalarFieldEnum = {
   totalAmount: 'totalAmount',
   status: 'status',
   paymentId: 'paymentId',
+  checkoutSessionId: 'checkoutSessionId',
+  cartFingerprint: 'cartFingerprint',
   items: 'items',
   fullName: 'fullName',
   address: 'address',

@@ -41,6 +41,8 @@ export type OrderMinAggregateOutputType = {
   totalAmount: number | null
   status: $Enums.OrderStatus | null
   paymentId: string | null
+  checkoutSessionId: string | null
+  cartFingerprint: string | null
   fullName: string | null
   address: string | null
   email: string | null
@@ -57,6 +59,8 @@ export type OrderMaxAggregateOutputType = {
   totalAmount: number | null
   status: $Enums.OrderStatus | null
   paymentId: string | null
+  checkoutSessionId: string | null
+  cartFingerprint: string | null
   fullName: string | null
   address: string | null
   email: string | null
@@ -73,6 +77,8 @@ export type OrderCountAggregateOutputType = {
   totalAmount: number
   status: number
   paymentId: number
+  checkoutSessionId: number
+  cartFingerprint: number
   items: number
   fullName: number
   address: number
@@ -100,6 +106,8 @@ export type OrderMinAggregateInputType = {
   totalAmount?: true
   status?: true
   paymentId?: true
+  checkoutSessionId?: true
+  cartFingerprint?: true
   fullName?: true
   address?: true
   email?: true
@@ -116,6 +124,8 @@ export type OrderMaxAggregateInputType = {
   totalAmount?: true
   status?: true
   paymentId?: true
+  checkoutSessionId?: true
+  cartFingerprint?: true
   fullName?: true
   address?: true
   email?: true
@@ -132,6 +142,8 @@ export type OrderCountAggregateInputType = {
   totalAmount?: true
   status?: true
   paymentId?: true
+  checkoutSessionId?: true
+  cartFingerprint?: true
   items?: true
   fullName?: true
   address?: true
@@ -236,6 +248,8 @@ export type OrderGroupByOutputType = {
   totalAmount: number
   status: $Enums.OrderStatus
   paymentId: string | null
+  checkoutSessionId: string | null
+  cartFingerprint: string | null
   items: runtime.JsonValue
   fullName: string
   address: string
@@ -276,6 +290,8 @@ export type OrderWhereInput = {
   totalAmount?: Prisma.IntFilter<"Order"> | number
   status?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   paymentId?: Prisma.StringNullableFilter<"Order"> | string | null
+  checkoutSessionId?: Prisma.StringNullableFilter<"Order"> | string | null
+  cartFingerprint?: Prisma.StringNullableFilter<"Order"> | string | null
   items?: Prisma.JsonFilter<"Order">
   fullName?: Prisma.StringFilter<"Order"> | string
   address?: Prisma.StringFilter<"Order"> | string
@@ -294,6 +310,8 @@ export type OrderOrderByWithRelationInput = {
   totalAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  checkoutSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  cartFingerprint?: Prisma.SortOrderInput | Prisma.SortOrder
   items?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   address?: Prisma.SortOrder
@@ -307,6 +325,7 @@ export type OrderOrderByWithRelationInput = {
 
 export type OrderWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  checkoutSessionId?: string
   AND?: Prisma.OrderWhereInput | Prisma.OrderWhereInput[]
   OR?: Prisma.OrderWhereInput[]
   NOT?: Prisma.OrderWhereInput | Prisma.OrderWhereInput[]
@@ -315,6 +334,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   totalAmount?: Prisma.IntFilter<"Order"> | number
   status?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   paymentId?: Prisma.StringNullableFilter<"Order"> | string | null
+  cartFingerprint?: Prisma.StringNullableFilter<"Order"> | string | null
   items?: Prisma.JsonFilter<"Order">
   fullName?: Prisma.StringFilter<"Order"> | string
   address?: Prisma.StringFilter<"Order"> | string
@@ -324,7 +344,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-}, "id">
+}, "id" | "checkoutSessionId">
 
 export type OrderOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -333,6 +353,8 @@ export type OrderOrderByWithAggregationInput = {
   totalAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  checkoutSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  cartFingerprint?: Prisma.SortOrderInput | Prisma.SortOrder
   items?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   address?: Prisma.SortOrder
@@ -358,6 +380,8 @@ export type OrderScalarWhereWithAggregatesInput = {
   totalAmount?: Prisma.IntWithAggregatesFilter<"Order"> | number
   status?: Prisma.EnumOrderStatusWithAggregatesFilter<"Order"> | $Enums.OrderStatus
   paymentId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  checkoutSessionId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  cartFingerprint?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   items?: Prisma.JsonWithAggregatesFilter<"Order">
   fullName?: Prisma.StringWithAggregatesFilter<"Order"> | string
   address?: Prisma.StringWithAggregatesFilter<"Order"> | string
@@ -374,6 +398,8 @@ export type OrderCreateInput = {
   totalAmount: number
   status: $Enums.OrderStatus
   paymentId?: string | null
+  checkoutSessionId?: string | null
+  cartFingerprint?: string | null
   items: Prisma.JsonNullValueInput | runtime.InputJsonValue
   fullName: string
   address: string
@@ -392,6 +418,8 @@ export type OrderUncheckedCreateInput = {
   totalAmount: number
   status: $Enums.OrderStatus
   paymentId?: string | null
+  checkoutSessionId?: string | null
+  cartFingerprint?: string | null
   items: Prisma.JsonNullValueInput | runtime.InputJsonValue
   fullName: string
   address: string
@@ -408,6 +436,8 @@ export type OrderUpdateInput = {
   totalAmount?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cartFingerprint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
@@ -426,6 +456,8 @@ export type OrderUncheckedUpdateInput = {
   totalAmount?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cartFingerprint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
@@ -443,6 +475,8 @@ export type OrderCreateManyInput = {
   totalAmount: number
   status: $Enums.OrderStatus
   paymentId?: string | null
+  checkoutSessionId?: string | null
+  cartFingerprint?: string | null
   items: Prisma.JsonNullValueInput | runtime.InputJsonValue
   fullName: string
   address: string
@@ -459,6 +493,8 @@ export type OrderUpdateManyMutationInput = {
   totalAmount?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cartFingerprint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
@@ -476,6 +512,8 @@ export type OrderUncheckedUpdateManyInput = {
   totalAmount?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cartFingerprint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
@@ -503,6 +541,8 @@ export type OrderCountOrderByAggregateInput = {
   totalAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
+  checkoutSessionId?: Prisma.SortOrder
+  cartFingerprint?: Prisma.SortOrder
   items?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   address?: Prisma.SortOrder
@@ -524,6 +564,8 @@ export type OrderMaxOrderByAggregateInput = {
   totalAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
+  checkoutSessionId?: Prisma.SortOrder
+  cartFingerprint?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   address?: Prisma.SortOrder
   email?: Prisma.SortOrder
@@ -540,6 +582,8 @@ export type OrderMinOrderByAggregateInput = {
   totalAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
+  checkoutSessionId?: Prisma.SortOrder
+  cartFingerprint?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   address?: Prisma.SortOrder
   email?: Prisma.SortOrder
@@ -605,6 +649,8 @@ export type OrderCreateWithoutUserInput = {
   totalAmount: number
   status: $Enums.OrderStatus
   paymentId?: string | null
+  checkoutSessionId?: string | null
+  cartFingerprint?: string | null
   items: Prisma.JsonNullValueInput | runtime.InputJsonValue
   fullName: string
   address: string
@@ -621,6 +667,8 @@ export type OrderUncheckedCreateWithoutUserInput = {
   totalAmount: number
   status: $Enums.OrderStatus
   paymentId?: string | null
+  checkoutSessionId?: string | null
+  cartFingerprint?: string | null
   items: Prisma.JsonNullValueInput | runtime.InputJsonValue
   fullName: string
   address: string
@@ -667,6 +715,8 @@ export type OrderScalarWhereInput = {
   totalAmount?: Prisma.IntFilter<"Order"> | number
   status?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   paymentId?: Prisma.StringNullableFilter<"Order"> | string | null
+  checkoutSessionId?: Prisma.StringNullableFilter<"Order"> | string | null
+  cartFingerprint?: Prisma.StringNullableFilter<"Order"> | string | null
   items?: Prisma.JsonFilter<"Order">
   fullName?: Prisma.StringFilter<"Order"> | string
   address?: Prisma.StringFilter<"Order"> | string
@@ -683,6 +733,8 @@ export type OrderCreateManyUserInput = {
   totalAmount: number
   status: $Enums.OrderStatus
   paymentId?: string | null
+  checkoutSessionId?: string | null
+  cartFingerprint?: string | null
   items: Prisma.JsonNullValueInput | runtime.InputJsonValue
   fullName: string
   address: string
@@ -699,6 +751,8 @@ export type OrderUpdateWithoutUserInput = {
   totalAmount?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cartFingerprint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
@@ -715,6 +769,8 @@ export type OrderUncheckedUpdateWithoutUserInput = {
   totalAmount?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cartFingerprint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
@@ -731,6 +787,8 @@ export type OrderUncheckedUpdateManyWithoutUserInput = {
   totalAmount?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   paymentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cartFingerprint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
@@ -750,6 +808,8 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   totalAmount?: boolean
   status?: boolean
   paymentId?: boolean
+  checkoutSessionId?: boolean
+  cartFingerprint?: boolean
   items?: boolean
   fullName?: boolean
   address?: boolean
@@ -768,6 +828,8 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   totalAmount?: boolean
   status?: boolean
   paymentId?: boolean
+  checkoutSessionId?: boolean
+  cartFingerprint?: boolean
   items?: boolean
   fullName?: boolean
   address?: boolean
@@ -786,6 +848,8 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   totalAmount?: boolean
   status?: boolean
   paymentId?: boolean
+  checkoutSessionId?: boolean
+  cartFingerprint?: boolean
   items?: boolean
   fullName?: boolean
   address?: boolean
@@ -804,6 +868,8 @@ export type OrderSelectScalar = {
   totalAmount?: boolean
   status?: boolean
   paymentId?: boolean
+  checkoutSessionId?: boolean
+  cartFingerprint?: boolean
   items?: boolean
   fullName?: boolean
   address?: boolean
@@ -814,7 +880,7 @@ export type OrderSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "token" | "totalAmount" | "status" | "paymentId" | "items" | "fullName" | "address" | "email" | "phone" | "comment" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "token" | "totalAmount" | "status" | "paymentId" | "checkoutSessionId" | "cartFingerprint" | "items" | "fullName" | "address" | "email" | "phone" | "comment" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Order$userArgs<ExtArgs>
 }
@@ -837,6 +903,8 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     totalAmount: number
     status: $Enums.OrderStatus
     paymentId: string | null
+    checkoutSessionId: string | null
+    cartFingerprint: string | null
     items: runtime.JsonValue
     fullName: string
     address: string
@@ -1275,6 +1343,8 @@ export interface OrderFieldRefs {
   readonly totalAmount: Prisma.FieldRef<"Order", 'Int'>
   readonly status: Prisma.FieldRef<"Order", 'OrderStatus'>
   readonly paymentId: Prisma.FieldRef<"Order", 'String'>
+  readonly checkoutSessionId: Prisma.FieldRef<"Order", 'String'>
+  readonly cartFingerprint: Prisma.FieldRef<"Order", 'String'>
   readonly items: Prisma.FieldRef<"Order", 'Json'>
   readonly fullName: Prisma.FieldRef<"Order", 'String'>
   readonly address: Prisma.FieldRef<"Order", 'String'>

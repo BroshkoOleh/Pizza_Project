@@ -8,6 +8,8 @@ import { generatePayOrderEmail } from "@/shared/lib/emailTemplates/generatePayOr
 import { sendOrderEmail } from "@/shared/lib/helpers/sendOrderEmail";
 import { stripe } from "@/shared/lib/stripe";
 import { TAX, DELIVERY_PRICE } from "../shared/constants/price";
+import {buildCartFingerprint} from "../shared/lib/helpers"
+
 
 export async function createOrder(data: CheckoutFormValues) {
   console.log(data);
@@ -48,37 +50,66 @@ export async function createOrder(data: CheckoutFormValues) {
 
     const taxPrice = (userCart.totalAmount * TAX) / 100;
     const totalPrice = userCart.totalAmount + taxPrice + DELIVERY_PRICE;
+    const cartFingerprint = buildCartFingerprint(userCart.items);
 
-    const order = await prisma.order.create({
-      data: {
+    let order = await prisma.order.findFirst({
+      where: {
         token: cartToken,
-        fullName: `${data.firstName} ${data.lastName}`,
-        email: data.email,
-        phone: data.phone,
-        address: data.address,
-        comment: data.comment,
-        totalAmount: totalPrice,
         status: OrderStatus.PENDING,
-        items: JSON.stringify(userCart.items),
+        cartFingerprint,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
 
-    // await prisma.cart.update({
-    //   where: {
-    //     id: userCart.id,
-    //   },
-    //   data: {
-    //     totalAmount: 0,
-    //   },
-    // });
+    if (!order) {
+      console.log("The cartFingerprint was not founded. The new order is creating")
+      order = await prisma.order.create({
+        data: {
+          token: cartToken,
+          fullName: `${data.firstName} ${data.lastName}`,
+          email: data.email,
+          phone: data.phone,
+          address: data.address,
+          comment: data.comment,
+          totalAmount: totalPrice,
+          status: OrderStatus.PENDING,
+          items: JSON.stringify(userCart.items),
+          cartFingerprint,
+        },
+      });
+    } else {
+      console.log("The previous active order was founded. Data of Order is updating")
+      order = await prisma.order.update({
+        where: {
+          id: order.id,
+        },
+        data: {
+          fullName: `${data.firstName} ${data.lastName}`,
+          email: data.email,
+          phone: data.phone,
+          address: data.address,
+          comment: data.comment,
+          totalAmount: totalPrice,
+          items: JSON.stringify(userCart.items),
+        },
+      });
+    }
 
-    // await prisma.cartItem.deleteMany({
-    //   where: {
-    //     cartId: userCart.id,
-    //   },
-    // });
 
-    // TODO: Make payment link creation
+    if (order.checkoutSessionId) {
+      console.log("Check current data of stripe Session")
+      try {
+        const existingSession = await stripe.checkout.sessions.retrieve(order.checkoutSessionId);
+
+        if (existingSession.status === "open" && existingSession.url) {
+          return existingSession.url.toString();
+        }
+      } catch (stripeError) {
+        console.log("Failed to retrieve checkout session:", stripeError);
+      }
+    }
 
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -99,6 +130,15 @@ export async function createOrder(data: CheckoutFormValues) {
       customer_email: data.email,
       metadata: {
         orderId: order.id.toString(),
+      },
+    });
+
+    await prisma.order.update({
+      where: {
+        id: order.id,
+      },
+      data: {
+        checkoutSessionId: session.id,
       },
     });
 

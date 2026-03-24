@@ -132,6 +132,8 @@ totalAmount Int
 status OrderStatus
 
 paymentId String?
+checkoutSessionId String? @unique
+cartFingerprint String?
 
 items Json
 
@@ -144,6 +146,7 @@ comment String?
 createdAt     DateTime  @default(now())
 updatedAt     DateTime  @updatedAt
 
+@@index([token, status, cartFingerprint])
 
 }
 
