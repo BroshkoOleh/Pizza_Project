@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import prisma from "@/shared/lib/prisma/db";
-import { OrderStatus } from "@/shared/lib/prisma/generatedPrisma/enums";
+import {handleSuccessfulPayment} from "@/shared/lib/helpers/handleSuccessfulPayment"
 
 export async function POST(req: NextRequest) {
   const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
@@ -28,88 +27,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
-  switch (event.type) {
-    case "checkout.session.completed": {
-      const session = event.data.object as Stripe.Checkout.Session;
-      await handleSuccessfulPayment(session);
-      break;
-    }
-    case "payment_intent.payment_failed": {
-      const intent = event.data.object as Stripe.PaymentIntent;
-      await handleFailedPayment(intent);
-      break;
-    }
+  if (event.type === "checkout.session.completed") {
+    const session = event.data.object as Stripe.Checkout.Session;
+    await handleSuccessfulPayment(session);
   }
 
   return NextResponse.json({ received: true });
-}
-
-async function handleSuccessfulPayment(session: Stripe.Checkout.Session) {
-  const orderId = session.metadata?.orderId;
-
-  if (!orderId) {
-    console.error("Missing orderId in checkout session metadata:", session.id);
-    return;
-  }
-
-  const existingOrder = await prisma.order.findUnique({
-    where: {
-      id: orderId,
-    },
-  });
-
-  if (!existingOrder) {
-    console.error("Order not found for checkout session:", session.id);
-    return;
-  }
-
-  if (existingOrder.status === OrderStatus.SUCCEEDED) {
-    return;
-  }
-
-  const paymentIntentId =
-    typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id;
-
-  const cart = await prisma.cart.findFirst({
-    where: {
-      token: existingOrder.token,
-    },
-  });
-
-  await prisma.$transaction(async (tx) => {
-    await tx.order.update({
-      where: {
-        id: existingOrder.id,
-      },
-      data: {
-        status: OrderStatus.SUCCEEDED,
-        paymentId: paymentIntentId ?? session.id,
-      },
-    });
-
-    if (!cart) {
-      return;
-    }
-
-    await tx.cartItem.deleteMany({
-      where: {
-        cartId: cart.id,
-      },
-    });
-
-    await tx.cart.update({
-      where: {
-        id: cart.id,
-      },
-      data: {
-        totalAmount: 0,
-      },
-    });
-  });
-
-  console.log("Payment succeeded and cart was cleared for order:", existingOrder.id);
-}
-
-async function handleFailedPayment(intent: Stripe.PaymentIntent) {
-  console.log("Payment failed:", intent.id);
 }

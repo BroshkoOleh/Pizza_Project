@@ -52,6 +52,8 @@ export async function createOrder(data: CheckoutFormValues) {
     const totalPrice = userCart.totalAmount + taxPrice + DELIVERY_PRICE;
     const cartFingerprint = buildCartFingerprint(userCart.items);
 
+
+    // check for diblication. if the order already exsits with the same composition we 
     let order = await prisma.order.findFirst({
       where: {
         token: cartToken,
@@ -97,7 +99,21 @@ export async function createOrder(data: CheckoutFormValues) {
       });
     }
 
+    // only one active order with status pending , prev orders must get the status Canceled 
+    await prisma.order.updateMany({
+      where: {
+        token: cartToken,
+        status: OrderStatus.PENDING,
+        id: {
+          not: order.id,
+        },
+      },
+      data: {
+        status: OrderStatus.CANCELLED,
+      },
+    });
 
+// to avoid creating a stripe session every time you submit
     if (order.checkoutSessionId) {
       console.log("Check current data of stripe Session")
       try {
@@ -111,6 +127,7 @@ export async function createOrder(data: CheckoutFormValues) {
       }
     }
 
+// create a  new strie session
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -127,6 +144,7 @@ export async function createOrder(data: CheckoutFormValues) {
       mode: "payment",
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout`,
+      expires_at: Math.floor(Date.now() / 1000) + 60 * 60, // 1 hour
       customer_email: data.email,
       metadata: {
         orderId: order.id.toString(),
@@ -143,22 +161,23 @@ export async function createOrder(data: CheckoutFormValues) {
     });
 
     const paymentUrl = session.url?.toString();
+    const emailPaymentUrl = `${process.env.NEXT_PUBLIC_APP_URL}/checkout/pay/${order.id}?token=${order.token}`;
 
     // Sending email via Brevo
-    // const htmlContent = generatePayOrderEmail({
-    //   orderId: order.id,
-    //   totalAmount: order.totalAmount,
-    //   address: data.address,
-    //   phone: data.phone,
-    //   firstName: data.firstName,
-    //   paymentUrl,
-    // });
-    // await sendOrderEmail({
-    //   orderId: order.id,
-    //   firstName: data.firstName,
-    //   email: data.email,
-    //   htmlContent,
-    // });
+    const htmlContent = generatePayOrderEmail({
+      orderId: order.id,
+      totalAmount: order.totalAmount,
+      address: data.address,
+      phone: data.phone,
+      firstName: data.firstName,
+      paymentUrl: emailPaymentUrl,
+    });
+    await sendOrderEmail({
+      orderId: order.id,
+      firstName: data.firstName,
+      email: data.email,
+      htmlContent,
+    });
     return paymentUrl;
   } catch (error) {
     console.log(error);

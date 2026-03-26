@@ -7,10 +7,11 @@ interface SendOrderEmailParams {
   firstName: string;
   email: string;
   htmlContent: string;
+  subject?: string;
 }
 
 export async function sendOrderEmail(params: SendOrderEmailParams) {
-  const { orderId, firstName, email, htmlContent } = params;
+  const { orderId, firstName, email, htmlContent, subject } = params;
   const brevoSender = process.env.BREVO_SENDER_EMAIL;
   const brevoSenderName = process.env.BREVO_SENDER_NAME || "Next Pizza";
   try {
@@ -23,7 +24,7 @@ export async function sendOrderEmail(params: SendOrderEmailParams) {
         name: brevoSenderName,
       },
       to: [{ email, name: firstName }],
-      subject: `Please pay for order №${orderId}`,
+      subject: subject || `Please pay for order №${orderId}`,
       htmlContent,
     });
 
