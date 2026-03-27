@@ -38,13 +38,13 @@ export default async function Home({ searchParams }: Props) {
       <Container className="mt-10 pb-14">
         <div className="flex gap-20">
           {/* Filtration */}
-          <div className="w-[250px]">
+          {/* <div className="w-[250px]">
             <Suspense>
-              <Filters />
+              <Filters />і
             </Suspense>
-          </div>
+          </div> */}
           {/* the list of goods */}
-          <div className="flex-1">
+          {/* <div className="flex-1">
             <div className="flex flex-col gap-16">
               {categories.map(
                 (category) =>
@@ -58,15 +58,9 @@ export default async function Home({ searchParams }: Props) {
                   )
               )}
 
-              {/* <ProductsGroupList title="Pizzas" products={products} categoryId={1} />
-              <ProductsGroupList title="Combos" products={products} categoryId={2} /> */}
             </div>
-            {/* 
-            <div className="flex items-center gap-6 mt-12">
-              <Pagination pageCount={3} />
-              <span className="text-sm text-gray-400">5 из 65</span>
-            </div> */}
-          </div>
+
+          </div> */}
         </div>
       </Container>
     </>

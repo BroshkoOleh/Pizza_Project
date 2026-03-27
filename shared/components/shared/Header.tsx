@@ -14,32 +14,32 @@ interface Props {
 function Header({ hasSearch = true, hasCart = true, className }: Props) {
   return (
     <header className={cn(" border-b", className)}>
-      <Container className="flex items-center justify-between py-8">
+      <Container className="flex flex-wrap items-center gap-3 p-3 sm:px-6 md:flex-nowrap md:py-6">
         {/* Left Side */}
-        <Link href="/">
-          <div className="flex items-center gap-4">
+        <Link href="/" className="shrink-0">
+          <div className="flex items-center gap-1 sm:gap-4">
             <Image src="/logo.png" alt="Logo" width={35} height={35} />
             <div>
-              <h1 className="text-2xl uppercase font-black">Next Pizza</h1>
-              <p className="text-sm text-gray-400 leading-3">Can&apos;t be teaster</p>
+              <h1 className="text-lg uppercase font-black leading-5 sm:text-2xl">Next Pizza</h1>
+              <p className="hidden text-sm text-gray-400 leading-3 min-[390px]:block pt-1">Can&apos;t be teaster</p>
             </div>
           </div>
         </Link>
 
         {hasSearch && (
-          <div className="mx-10 flex-1">
+          <div className="order-3 w-full md:order-2 md:mx-6 md:flex-1">
             <SearchInput />
           </div>
         )}
 
         {/* Right Side */}
 
-        <div className="flex items-center gap-1">
-          <Button variant="outline" className="flex items-center gap-3">
+        <div className="order-2 ml-auto flex items-center gap-1 md:order-3 md:gap-2">
+          <Button variant="outline" className="flex h-10 items-center gap-2 px-2.5 sm:gap-3 sm:px-4">
             <User size={16} />
-            Enter
+            <span className="hidden sm:inline">Enter</span>
           </Button>
-          {hasCart && <CartButton />}
+          {hasCart && <CartButton className="h-10 px-3 sm:px-4" />}
         </div>
       </Container>
     </header>
