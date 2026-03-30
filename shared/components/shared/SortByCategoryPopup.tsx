@@ -9,12 +9,12 @@ export function SortByCategoryPopup({ className }: Props) {
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-1 bg-gray-50 px-5 h-[52px] rounded-2xl cursor-pointer",
+        "inline-flex h-[52px] items-center gap-1 rounded-2xl bg-gray-50 px-3 sm:px-5 cursor-pointer",
         className
       )}
     >
       <ArrowUpDown size={16} />
-      <b>Soring</b>
+      <b className="hidden sm:inline">Soring</b>
       <b className="text-primary">Populary</b>
     </div>
   );

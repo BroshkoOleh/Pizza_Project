@@ -30,7 +30,7 @@ export default async function Home({ searchParams }: Props) {
 
   return (
     <>
-      <Container className="mt-10">
+      <Container className="mt-10 px-4 sm:px-6">
         <HeadTitle text="All pizzas" size="lg" className="font-extrabold" />
       </Container>
       <TopBar categories={categories} />
@@ -38,11 +38,11 @@ export default async function Home({ searchParams }: Props) {
       <Container className="mt-10 pb-14">
         <div className="flex gap-20">
           {/* Filtration */}
-          {/* <div className="w-[250px]">
+          <div className="w-[250px]">
             <Suspense>
-              <Filters />і
+              <Filters />
             </Suspense>
-          </div> */}
+          </div>
           {/* the list of goods */}
           {/* <div className="flex-1">
             <div className="flex flex-col gap-16">
