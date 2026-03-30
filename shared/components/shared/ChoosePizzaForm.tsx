@@ -61,9 +61,11 @@ export function ChoosePizzaForm({
   };
 
   return (
-    <div className={cn(className, "flex flex-1")}>
-      <PizzaImage imageUrl={imageUrl} size={size} />
-      <div className="w-[490px] bg-[#f7f6f5] p-7">
+    <div className={cn(className, "flex flex-1 flex-col lg:flex-row")}>
+      <div className="order-2 my-4 sm:my-6 lg:my-0 lg:order-1 lg:flex lg:flex-1 lg:items-center lg:justify-center lg:h-full">
+        <PizzaImage imageUrl={imageUrl} size={size} />
+      </div>
+      <div className="order-1 w-full bg-[#f7f6f5] p-4 lg:order-2 lg:w-[490px] lg:p-7">
         {isModal ? (
           <DialogTitle className="font-extrabold mb-1">{name}</DialogTitle>
         ) : (
@@ -85,8 +87,8 @@ export function ChoosePizzaForm({
           />
         </div>
 
-        <div className="bg-gray-50 p-5 rounded-md h-[350px] overflow-auto scrollbar mt-4">
-          <div className="grid grid-cols-3 gap-3">
+        <div className="bg-gray-50 p-4 sm:p-5 rounded-md h-[350px] overflow-auto scrollbar mt-4">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
             {ingredients.map((ingredient) => (
               <IngredientItem
                 key={ingredient.id}
@@ -95,6 +97,7 @@ export function ChoosePizzaForm({
                 price={ingredient.price}
                 onClick={() => addIngredient(ingredient.id)}
                 active={selectedIngredientsIds.has(ingredient.id)}
+                className="w-full"
               />
             ))}
           </div>
@@ -103,8 +106,13 @@ export function ChoosePizzaForm({
         <Button
           loading={loading}
           onClick={handleClickAdd}
-          className="h-[55px] px-10 text-base rounded-[18px] w-full mt-6"
+          className="hidden h-[55px] px-10 text-base rounded-[18px] w-full mt-6 lg:flex"
         >
+          Add to Cart for {totalPrice} $
+        </Button>
+      </div>
+      <div className="order-3 p-4 pt-2 lg:hidden">
+        <Button loading={loading} onClick={handleClickAdd} className="h-[55px] w-full rounded-[18px] px-10 text-base">
           Add to Cart for {totalPrice} $
         </Button>
       </div>

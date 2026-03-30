@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { cn } from "@/shared/lib/utils";
+import { useEffect, useState } from "react";
 
 interface Props {
   className?: string;
@@ -14,10 +17,47 @@ export function PizzaImage({ imageUrl, size, className }: Props) {
     40: 500,
   };
 
-  const imageSize = sizeMap[size];
+  const sizeMobileMap = {
+    20: 190,
+    30: 250,
+    40: 310,
+  };
+
+
+  const borderSizeMap = {
+    inner: 370,
+    outer: 450,
+  };
+
+  const borderSizeMobileMap = {
+    inner: 230,
+    outer: 290,
+  };
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 1023px)");
+    const updateIsMobile = () => setIsMobile(media.matches);
+
+    updateIsMobile();
+    media.addEventListener("change", updateIsMobile);
+    return () => media.removeEventListener("change", updateIsMobile);
+  }, []);
+
+  const currentSizeMap = isMobile ? sizeMobileMap : sizeMap;
+  const currentBorderMap = isMobile ? borderSizeMobileMap : borderSizeMap;
+  const imageSize = currentSizeMap[size];
+  const frameSize = Math.max(imageSize, currentBorderMap.outer);
 
   return (
-    <div className={cn("flex items-center justify-center flex-1 relative w-full", className)}>
+    <div
+      className={cn("relative flex w-full flex-1 items-center justify-center", className)}
+      style={{
+        minHeight: frameSize,
+        height: frameSize,
+      }}
+    >
       <Image
         src={imageUrl}
         alt="Product image"
@@ -27,8 +67,20 @@ export function PizzaImage({ imageUrl, size, className }: Props) {
         priority
       />
 
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-dashed border-2 rounded-full border-gray-200 w-[450px] h-[450px]" />
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-dotted border-2 rounded-full border-gray-100 w-[370px] h-[370px]" />
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-dashed border-2 rounded-full border-gray-200"
+        style={{
+          width: currentBorderMap.outer,
+          height: currentBorderMap.outer,
+        }}
+      />
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-dotted border-2 rounded-full border-gray-100"
+        style={{
+          width: currentBorderMap.inner,
+          height: currentBorderMap.inner,
+        }}
+      />
     </div>
   );
 }

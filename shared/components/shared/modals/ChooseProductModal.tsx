@@ -12,12 +12,15 @@ interface Props {
 
 export function ChooseProductModal({ product, className }: Props) {
   const router = useRouter();
+  const isPizzaForm = Boolean(product.variation[0]?.pizzaType);
 
   return (
     <Dialog open={Boolean(product)} onOpenChange={() => router.back()}>
       <DialogContent
         className={cn(
-          "p-0 w-[1060px] max-w-[1060px] sm:max-w-[1060px] min-h-[500px] max-h-[700px] bg-white overflow-hidden",
+          isPizzaForm
+            ? "w-screen max-w-none border-0 p-0 bg-white overflow-y-auto h-screen rounded-none sm:h-auto sm:w-[calc(100%-4rem)] sm:max-w-[860px] sm:max-h-[90vh] sm:rounded-lg sm:border lg:w-[1000px] lg:max-w-[1000px] lg:min-h-[500px] lg:max-h-[700px] xl:w-[1060px] xl:max-w-[1060px]"
+            : "w-[calc(100%-1.5rem)] max-w-[460px] rounded-lg border bg-white p-0 max-h-[90vh] overflow-y-auto sm:w-[calc(100%-4rem)] sm:max-w-[860px] sm:min-h-[400px] sm:max-h-[90vh] lg:w-[1000px] lg:max-w-[1000px] lg:min-h-[500px] lg:max-h-[700px] xl:w-[1060px] xl:max-w-[1060px]",
           className
         )}
       >

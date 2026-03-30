@@ -24,8 +24,13 @@ export function ChooseProductForm({
   className,
 }: Props) {
   return (
-    <div className={cn(className, "flex flex-1")}>
-      <div className={cn("flex items-center justify-center flex-1 relative w-full", className)}>
+    <div className={cn(className, "flex min-h-0 flex-col lg:flex-1 lg:flex-row")}>
+      <div
+        className={cn(
+          "relative order-2 flex w-full shrink-0 items-center justify-center py-2 lg:order-1 lg:flex-1 lg:py-0",
+          className
+        )}
+      >
         <Image
           src={imageUrl}
           alt="Product image"
@@ -35,7 +40,7 @@ export function ChooseProductForm({
           priority
         />
       </div>
-      <div className="w-[490px] bg-[#f7f6f5] p-7">
+      <div className="order-1 w-full bg-[#f7f6f5] p-4 lg:order-2 lg:w-[490px] lg:p-7">
         {isModal ? (
           <DialogTitle className="font-extrabold mb-1">{name}</DialogTitle>
         ) : (
@@ -46,8 +51,13 @@ export function ChooseProductForm({
         <Button
           loading={loading}
           onClick={onClickAddCart}
-          className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
+          className="hidden h-[55px] px-10 text-base rounded-[18px] w-full mt-10 lg:flex"
         >
+          Add to Cart for {price} $
+        </Button>
+      </div>
+      <div className="order-3 p-4 pt-2 lg:hidden">
+        <Button loading={loading} onClick={onClickAddCart} className="h-[55px] w-full rounded-[18px] px-10 text-base">
           Add to Cart for {price} $
         </Button>
       </div>

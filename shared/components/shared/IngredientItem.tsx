@@ -15,7 +15,7 @@ export function IngredientItem({ imageUrl, name, price, active, onClick, classNa
   return (
     <div
       className={cn(
-        "flex items-center flex-col p-1 rounded-md w-32 text-center relative cursor-pointer shadow-md bg-white",
+        "relative flex h-full w-full cursor-pointer flex-col items-center rounded-md bg-white p-1 text-center shadow-md",
         { "border border-primary": active },
         className
       )}
