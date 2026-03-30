@@ -42,8 +42,13 @@ export const ProductsGroupList = ({
     <div className={className} id={title} ref={intersectionRef}>
       <HeadTitle text={title} size="lg" className="font-extrabold mb-5" />
 
-      <div className={cn("grid grid-cols-3 gap-[50px] items-stretch", listClassName)}>
-        {products.map((product, i) => (
+      <div
+        className={cn(
+          "grid grid-cols-1 gap-6 items-stretch sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 lg:gap-8 xl:gap-10",
+          listClassName
+        )}
+      >
+        {products.map((product) => (
           <ProductCard
             key={product.id}
             id={product.id}
