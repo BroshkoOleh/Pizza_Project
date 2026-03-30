@@ -5,6 +5,7 @@ import {
   TopBar,
   Filters,
   ProductsGroupList,
+  MobileFiltersDrawer,
 } from "@/shared/components/shared/index";
 import { Suspense } from "react";
 import { findPizzas } from "@/shared/lib/helpers";
@@ -35,16 +36,19 @@ export default async function Home({ searchParams }: Props) {
       </Container>
       <TopBar categories={categories} />
 
-      <Container className="mt-10 pb-14">
+      <Container className="mt-10 pb-14 px-4 sm:px-6">
+        <div className="mb-6 md:hidden">
+          <MobileFiltersDrawer />
+        </div>
         <div className="flex gap-20">
           {/* Filtration */}
-          <div className="w-[250px]">
+          <div className="hidden w-[250px] shrink-0 md:block">
             <Suspense>
               <Filters />
             </Suspense>
           </div>
           {/* the list of goods */}
-          {/* <div className="flex-1">
+          <div className="flex-1">
             <div className="flex flex-col gap-16">
               {categories.map(
                 (category) =>
@@ -60,7 +64,7 @@ export default async function Home({ searchParams }: Props) {
 
             </div>
 
-          </div> */}
+          </div>
         </div>
       </Container>
     </>

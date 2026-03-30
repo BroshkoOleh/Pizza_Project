@@ -4,6 +4,7 @@ export { HeadTitle } from "./HeadTitle";
 export { Categories } from "./Categories";
 export { SortByCategoryPopup } from "./SortByCategoryPopup";
 export { TopBar } from "./TopBar";
+export { MobileFiltersDrawer } from "./MobileFiltersDrawer";
 export { FilterCheckbox } from "./FilterCheckbox";
 export { Filters } from "./Filters";
 export { RangeSlider } from "./RangeSlider";
