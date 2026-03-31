@@ -4,6 +4,7 @@ import { Product } from "../../../types";
 import { cn } from "@/shared/lib/utils";
 import { useRouter } from "next/navigation";
 import { ProductForm } from "./ProductForm";
+import { useEffect, useState } from "react";
 
 interface Props {
   product: Product;
@@ -13,9 +14,26 @@ interface Props {
 export function ChooseProductModal({ product, className }: Props) {
   const router = useRouter();
   const isPizzaForm = Boolean(product.variation[0]?.pizzaType);
+  const [open, setOpen] = useState(Boolean(product));
+
+  useEffect(() => {
+    setOpen(Boolean(product));
+  }, [product]);
+
+  const handleCloseModal = () => {
+    setOpen(false);
+    router.back();
+  };
 
   return (
-    <Dialog open={Boolean(product)} onOpenChange={() => router.back()}>
+    <Dialog
+      open={open}
+      onOpenChange={(nextOpen) => {
+        if (!nextOpen) {
+          handleCloseModal();
+        }
+      }}
+    >
       <DialogContent
         className={cn(
           isPizzaForm
@@ -24,7 +42,7 @@ export function ChooseProductModal({ product, className }: Props) {
           className
         )}
       >
-        <ProductForm product={product} isModal={true} closeModal={() => router.back()} />
+        <ProductForm product={product} isModal={true} closeModal={handleCloseModal} />
       </DialogContent>
     </Dialog>
   );
