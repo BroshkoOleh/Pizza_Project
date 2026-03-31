@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HeadTitle } from "@/shared/components/shared";
+import { Container, HeadTitle } from "@/shared/components/shared";
 import { Button } from "@/shared/components/ui";
 import { CheckCircle2 } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
@@ -14,7 +14,7 @@ export default async function CheckoutSuccessPage({
   const session = await stripe.checkout.sessions.retrieve(session_id);
   console.log("session", session);
   return (
-    <section className="mt-10 mb-20 flex flex-col items-center">
+    <Container className="mt-10 mb-20 flex flex-col items-center p-3 sm:px-6 md: py-6">
       <div
         className={cn(
           "w-full max-w-md rounded-3xl bg-white px-8 py-10 shadow-sm",
@@ -22,10 +22,10 @@ export default async function CheckoutSuccessPage({
         )}
       >
         <div
-          className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-primary/10"
+          className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-green-500/10"
           aria-hidden
         >
-          <CheckCircle2 className="size-9 text-primary" strokeWidth={2} />
+          <CheckCircle2 className="size-9 text-green-500" strokeWidth={2} />
         </div>
         <HeadTitle
           text="Payment successful"
@@ -41,6 +41,6 @@ export default async function CheckoutSuccessPage({
           </Link>
         </Button>
       </div>
-    </section>
+    </Container>
   );
 }

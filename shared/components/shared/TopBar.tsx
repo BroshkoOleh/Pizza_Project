@@ -13,7 +13,7 @@ export function TopBar({ categories, className }: Props) {
   return (
     <div className={cn("sticky top-0 bg-white py-5 shadow-lg shadow-black/5 z-10", className)}>
       <Container className="flex items-center justify-between gap-2 px-4 sm:px-6">
-        <Categories categories={availableCategories} className="flex-1" />
+        <Categories categories={availableCategories} className="" />
         <SortByCategoryPopup className="shrink-0 max-md:h-[48px] max-md:px-3" />
       </Container>
     </div>

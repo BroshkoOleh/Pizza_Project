@@ -3,6 +3,7 @@ import { CheckoutItemDetails } from "../CheckoutItemDetails";
 import { ArrowRight, Package, Percent, Truck } from "lucide-react";
 import { Button, Skeleton } from "../../ui";
 import { TAX, DELIVERY_PRICE } from "../../../constants/price";
+import { cn } from "@/shared/lib/utils";
 
 interface Props {
   totalAmount: number;
@@ -15,8 +16,8 @@ export function CheckoutSidebar({ totalAmount, loading, submitting, className }:
   const taxPrice = (totalAmount * TAX) / 100;
   const totalPrice = totalAmount + taxPrice + DELIVERY_PRICE;
   return (
-    <aside className="w-[450px]">
-      <WhiteBlock className="p-6 sticky top-4">
+    <aside className={cn("w-full lg:w-[450px]", className)}>
+      <WhiteBlock className="p-6 lg:sticky lg:top-4">
         <div className="flex flex-col gap-1">
           <span className="text-xl">Total:</span>
           {loading ? (

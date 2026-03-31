@@ -1,16 +1,17 @@
 import Link from "next/link";
 import { XCircle } from "lucide-react";
-import { HeadTitle } from "@/shared/components/shared";
+import { Container, HeadTitle } from "@/shared/components/shared";
 import { Button } from "@/shared/components/ui";
 import { cn } from "@/shared/lib/utils";
 
 
 export function OrderStatusCard({ title, description }: { title: string; description: string }) {
     return (
-      <section className="mt-10 mb-20 flex flex-col items-center">
+    <Container className="flex items-center justify-center p-3 sm:px-6 md: py-6">
+   
         <div
           className={cn(
-            "w-full max-w-md rounded-3xl bg-white px-8 py-10 shadow-sm",
+            "w-full max-w-md rounded-3xl bg-white px-8 py-5 shadow-sm",
             "animate-in fade-in slide-in-from-bottom-4 duration-500"
           )}
         >
@@ -29,11 +30,11 @@ export function OrderStatusCard({ title, description }: { title: string; descrip
             {description}
           </p>
           <Button variant="default" size="lg" className="w-full" asChild>
-            <Link href="/checkout" className="inline-flex items-center justify-center gap-2">
+            <Link href="/" className="inline-flex items-center justify-center gap-2">
               Back to checkout
             </Link>
           </Button>
         </div>
-      </section>
+      </Container>
     );
   }
