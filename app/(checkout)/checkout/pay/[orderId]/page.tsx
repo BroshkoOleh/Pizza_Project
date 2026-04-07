@@ -41,39 +41,52 @@ export default async function CheckoutPayPage({ params, searchParams }: Props) {
     );
   }
 
-  let existingSession: Awaited<ReturnType<typeof stripe.checkout.sessions.retrieve>> | null = null;
-
   if (order.checkoutSessionId) {
     try {
-      existingSession = await stripe.checkout.sessions.retrieve(order.checkoutSessionId);
+      const existingSession = await stripe.checkout.sessions.retrieve(order.checkoutSessionId);
+
+      if (existingSession.status === "open" && existingSession.url) {
+        redirect(existingSession.url);
+      }
     } catch (error) {
-      console.error("Failed to retrieve checkout session in pay page:", error);
+      console.log("Failed to retrieve checkout session in pay page:", error);
     }
   }
 
-  if (existingSession?.status === "open" && existingSession.url) {
-    redirect(existingSession.url);
-  } else if (existingSession?.status === "expired") {
-    await prisma.order.update({
-      where: {
-        id: order.id,
+  const session = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: `Order №${order.id}`,
+          },
+          unit_amount: Math.round(order.totalAmount * 100),
+        },
+        quantity: 1,
       },
-      data: {
-        status: OrderStatus.CANCELLED,
-      },
-    });
+    ],
+    mode: "payment",
+    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout?canceled=1&order_id=${order.id}`,
+    customer_email: order.email,
+    metadata: {
+      orderId: order.id.toString(),
+    },
+  });
 
-    return (
-      <OrderStatusCard
-        title="Order is expired"
-        description="This order is no longer active. Please create a new order."
-      />
-    );
+  await prisma.order.update({
+    where: {
+      id: order.id,
+    },
+    data: {
+      checkoutSessionId: session.id,
+    },
+  });
+
+  if (session.url) {
+    redirect(session.url);
   }
-
-
-
-
 
   return (
     <OrderStatusCard

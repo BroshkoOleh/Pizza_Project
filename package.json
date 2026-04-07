@@ -10,7 +10,8 @@
     "lint": "eslint",
     "prisma:push": "prisma db push",
     "prisma:studio": "prisma studio",
-    "prisma:seed": "prisma db seed"
+    "prisma:seed": "prisma db seed",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@geoapify/geocoder-autocomplete": "^3.0.1",
@@ -34,7 +35,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "lucide-react": "^0.555.0",
-    "next": "16.0.6",
+    "next": "^16.0.7",
     "prisma": "^7.1.0",
     "qs": "^6.14.0",
     "react": "19.2.0",
