@@ -62,7 +62,7 @@ export function ChoosePizzaForm({
 
   return (
     <div className={cn(className, "flex flex-1 flex-col lg:flex-row")}>
-      <div className="order-2 my-4 sm:my-6 lg:my-0 lg:order-1 lg:flex lg:flex-1 lg:items-center lg:justify-center lg:h-full">
+      <div className="hidden order-2 my-4 sm:my-6 lg:my-0 lg:order-1 lg:flex lg:flex-1 lg:items-center lg:justify-center lg:h-full">
         <PizzaImage imageUrl={imageUrl} size={size} />
       </div>
       <div className="order-1 w-full bg-[#f7f6f5] p-4 lg:order-2 lg:w-[490px] lg:p-7">
@@ -87,7 +87,11 @@ export function ChoosePizzaForm({
           />
         </div>
 
-        <div className="bg-gray-50 p-4 sm:p-5 rounded-md h-[350px] overflow-auto scrollbar mt-4">
+        <div className="order-2 my-4 sm:my-6 lg:hidden">
+          <PizzaImage imageUrl={imageUrl} size={size} />
+        </div>
+
+        <div className="bg-gray-50 p-4 sm:p-5 rounded-md h-auto sm:h-[350px] overflow-visible sm:overflow-auto sm:scrollbar mt-4">
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
             {ingredients.map((ingredient) => (
               <IngredientItem

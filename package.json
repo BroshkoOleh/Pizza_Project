@@ -11,7 +11,9 @@
     "prisma:push": "prisma db push",
     "prisma:studio": "prisma studio",
     "prisma:seed": "prisma db seed",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "stripe:listen": "stripe listen --forward-to localhost:3000/api/stripe/webhook"
+    
   },
   "dependencies": {
     "@geoapify/geocoder-autocomplete": "^3.0.1",
