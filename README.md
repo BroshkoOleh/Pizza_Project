@@ -8,7 +8,7 @@ Toriiy
 
 • Product page: a separate product page with data from the database. For pizza, users can select size, dough type, additional ingredients, and see the final price just like in the modal. Smart option selection: if a certain size is not available for the selected dough type, the interface automatically selects an available option to avoid an empty state.
 
-Short summary for resume: backend data and catalog, main page, filtering and search, product page and modal with pizza configuration.
+Short summary: backend data and catalog, main page, filtering and search, product page and modal with pizza configuration.
 
 
 _________________________________________________________________________________
@@ -34,4 +34,4 @@ Broshko Oleh
 
 • Deployment: deployed the project on Vercel with environment variables configuration (database, Stripe, email service), build setup, and verification of server-side logic in production.
 
-Short summary for resume: responsive UI, cart and its business logic, full checkout flow, Stripe and email integration, deployment and production environment handling.
+Short summary: responsive UI, cart and its business logic, full checkout flow, Stripe and email integration, deployment and production environment handling.
