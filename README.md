@@ -11,6 +11,7 @@ Toriiy
 Short summary for resume: backend data and catalog, main page, filtering and search, product page and modal with pizza configuration.
 
 
+_________________________________________________________________________________
 
 
 Broshko Oleh
